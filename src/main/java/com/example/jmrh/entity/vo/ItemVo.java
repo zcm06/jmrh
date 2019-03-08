@@ -17,5 +17,5 @@ public class ItemVo extends Item {
 
     @Getter
     @Setter
-    private List<Item> childList = new ArrayList<>();
+    private List<ItemVo> childList = new ArrayList<ItemVo>();
 }

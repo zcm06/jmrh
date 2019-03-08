@@ -5,6 +5,7 @@ import com.example.jmrh.entity.TableInfo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,5 +18,5 @@ public class TableInfoVo extends TableInfo {
 
     @Getter
     @Setter
-    private List<Item> itemList;
+    private List<Item> itemList = new ArrayList<Item>();
 }

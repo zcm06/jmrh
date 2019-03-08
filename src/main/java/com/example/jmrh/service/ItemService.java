@@ -20,4 +20,6 @@ public interface ItemService {
     public Item getItemById(Long id);
 
     public List<Item> getItemsByIds(List<Long> ids);
+
+    public List<Item> getAllItems();
 }

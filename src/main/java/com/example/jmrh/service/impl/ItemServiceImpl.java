@@ -35,4 +35,9 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getItemsByIds(List<Long> ids) {
         return itemRepository.findAllById(ids);
     }
+
+    @Override
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
 }
