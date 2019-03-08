@@ -18,6 +18,7 @@ public class TableInfoItem {
     @Getter
     @Setter
     @Column(name = "id")
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
