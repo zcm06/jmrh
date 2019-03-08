@@ -3,7 +3,7 @@ package com.example.jmrh.service;
 import com.example.jmrh.entity.Item;
 import org.springframework.stereotype.Service;
 
-@Service
+
 public interface ItemService {
 
     /** 

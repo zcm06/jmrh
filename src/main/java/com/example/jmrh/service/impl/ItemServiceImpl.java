@@ -4,6 +4,7 @@ import com.example.jmrh.dao.ItemRepository;
 import com.example.jmrh.entity.Item;
 import com.example.jmrh.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @program: jmrh
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author: ZHANG CANMING
  * @create: 2019-03-07 22:54
  **/
+@Service
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
