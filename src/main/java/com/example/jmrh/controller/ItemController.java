@@ -64,7 +64,7 @@ public class ItemController {
         for (Item item : itemList) {
             if (item.getItemLevel() == 1) {
                 itemVo = new ItemVo();
-                BeanUtils.copyProperties(itemVo,item);
+                BeanUtils.copyProperties(item,itemVo);
                 itemVoList.add(itemVo);
                 appendChild(itemVo, itemList);
             }
@@ -78,7 +78,7 @@ public class ItemController {
         for (Item item : itemList) {
             if (item.getParentId() != null && item.getParentId().equals(itemVo.getId()) ) {
                 child = new ItemVo();
-                BeanUtils.copyProperties(child,item);
+                BeanUtils.copyProperties(item,child);
                 itemVo.getChildList().add(child);
                 appendChild(child, itemList);
             }
