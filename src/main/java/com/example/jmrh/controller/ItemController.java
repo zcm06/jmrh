@@ -41,6 +41,8 @@ public class ItemController {
                 Item parent = itemService.getItemById(item.getParentId());
                 item.setFieldName(parent.getFieldName());
                 item.setItemLevel(parent.getItemLevel() + 1);
+            } else {
+                item.setItemLevel(1);
             }
             item = itemService.save(item);
             return ResultUtil.successfulResultMap(item);
