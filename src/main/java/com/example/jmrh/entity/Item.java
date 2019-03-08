@@ -50,7 +50,5 @@ public class Item implements Serializable {
     @Column(name = "field_name")
     private String fieldName;
 
-    @Getter
-    @Setter
-    private List<Item> childList = new ArrayList<>();
+
 }

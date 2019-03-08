@@ -19,6 +19,7 @@ public class TableInfo {
 
     @Getter
     @Setter
+    @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -153,7 +154,4 @@ public class TableInfo {
     @Column(name = "unit_overview")
     private String unitOverview;
 
-    @Getter
-    @Setter
-    private List<Item> itemList;
 }
