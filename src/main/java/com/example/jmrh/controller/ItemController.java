@@ -37,6 +37,11 @@ public class ItemController {
     @ResponseBody
     public ResultObject saveItem(@RequestBody Item item, HttpServletRequest request) {
         try {
+            if (item.getParentId() != null) {
+                Item parent = itemService.getItemById(item.getParentId());
+                item.setFieldName(parent.getFieldName());
+                item.setItemLevel(parent.getItemLevel() + 1);
+            }
             item = itemService.save(item);
             return ResultUtil.successfulResultMap(item);
         } catch (Exception e) {
@@ -64,7 +69,7 @@ public class ItemController {
         for (Item item : itemList) {
             if (item.getItemLevel() == 1) {
                 itemVo = new ItemVo();
-                BeanUtils.copyProperties(item,itemVo);
+                BeanUtils.copyProperties(item, itemVo);
                 itemVoList.add(itemVo);
                 appendChild(itemVo, itemList);
             }
@@ -76,9 +81,9 @@ public class ItemController {
     private void appendChild(ItemVo itemVo, List<Item> itemList) {
         ItemVo child = null;
         for (Item item : itemList) {
-            if (item.getParentId() != null && item.getParentId().equals(itemVo.getId()) ) {
+            if (item.getParentId() != null && item.getParentId().equals(itemVo.getId())) {
                 child = new ItemVo();
-                BeanUtils.copyProperties(item,child);
+                BeanUtils.copyProperties(item, child);
                 itemVo.getChildList().add(child);
                 appendChild(child, itemList);
             }
