@@ -56,9 +56,10 @@ public class ItemController {
     @ResponseBody
     public ResultObject loadItemList(HttpServletRequest request) {
         try {
-            List<ItemVo> itemVoList = new ArrayList<ItemVo>();
+//            List<ItemVo> itemVoList = new ArrayList<ItemVo>();
             List<Item> itemList = itemService.getAllItems();
-            loadItems(itemVoList, itemList);
+//            loadItems(itemVoList, itemList);
+            List<ItemVo> itemVoList = loadChild(itemList);
             return ResultUtil.successfulResultMap(itemVoList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,29 +67,68 @@ public class ItemController {
         }
     }
 
-    private void loadItems(List<ItemVo> itemVoList, List<Item> itemList) {
+//    private void loadItems(List<ItemVo> itemVoList, List<Item> itemList) {
+//        ItemVo itemVo = null;
+//        for (Item item : itemList) {
+//            if (item.getItemLevel() == 1) {
+//                itemVo = new ItemVo();
+//                BeanUtils.copyProperties(item, itemVo);
+//                itemVoList.add(itemVo);
+//                appendChild(itemVo, itemList);
+//            }
+//        }
+//
+//
+//    }
+//
+//    private void appendChild(ItemVo itemVo, List<Item> itemList) {
+//        ItemVo child = null;
+//        for (Item item : itemList) {
+//            if (item.getParentId() != null && item.getParentId().equals(itemVo.getId())) {
+//                child = new ItemVo();
+//                BeanUtils.copyProperties(item, child);
+//                itemVo.getChildList().add(child);
+//                appendChild(child, itemList);
+//            }
+//        }
+//    }
+
+    /** 
+    * @Description: 加载子节点 
+    * @Param: [itemList] 
+    * @return: java.util.List<com.example.jmrh.entity.vo.ItemVo> 
+    * @Author: ZHANG CANMING
+    * @Date: 2019/3/9 
+    */ 
+    private List<ItemVo> loadChild(List<Item> itemList){
+
+        List<ItemVo> itemVoList = new ArrayList<>();
         ItemVo itemVo = null;
-        for (Item item : itemList) {
-            if (item.getItemLevel() == 1) {
-                itemVo = new ItemVo();
-                BeanUtils.copyProperties(item, itemVo);
-                itemVoList.add(itemVo);
-                appendChild(itemVo, itemList);
+        for (Item item:itemList){
+            itemVo = new ItemVo();
+            BeanUtils.copyProperties(item, itemVo);
+            itemVoList.add(itemVo);
+        }
+        if (itemVoList.size() <=1){
+            return itemVoList;
+        }
+
+        for (ItemVo vo:itemVoList) {
+            for (ItemVo child:itemVoList){
+                if (vo.getId().equals(child.getParentId())){
+                    vo.getChildList().add(child);
+                }
             }
         }
 
-
-    }
-
-    private void appendChild(ItemVo itemVo, List<Item> itemList) {
-        ItemVo child = null;
-        for (Item item : itemList) {
-            if (item.getParentId() != null && item.getParentId().equals(itemVo.getId())) {
-                child = new ItemVo();
-                BeanUtils.copyProperties(item, child);
-                itemVo.getChildList().add(child);
-                appendChild(child, itemList);
+        Iterator<ItemVo> iterator= itemVoList.iterator();
+        while (iterator.hasNext()){
+            ItemVo next = iterator.next();
+            if(next.getChildList().isEmpty() && next.getParentId() != null){
+                iterator.remove();
             }
         }
+
+        return itemVoList;
     }
 }
