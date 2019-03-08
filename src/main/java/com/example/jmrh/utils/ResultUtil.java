@@ -1,6 +1,6 @@
 package com.example.jmrh.utils;
 
-import com.example.jmrh.entity.ResultMap;
+import com.example.jmrh.entity.ResultObject;
 
 /**
  * @program: jmrh
@@ -10,17 +10,17 @@ import com.example.jmrh.entity.ResultMap;
  **/
 public class ResultUtil {
 
-    public static ResultMap successfulResultMap(Object obj){
-        ResultMap resultMap = new ResultMap();
-        resultMap.setState(true);
-        resultMap.setValue(obj);
-        return resultMap;
+    public static ResultObject successfulResultMap(Object obj){
+        ResultObject resultObject = new ResultObject();
+        resultObject.setState(true);
+        resultObject.setValue(obj);
+        return resultObject;
     }
 
-    public static ResultMap failResultMap(String message){
-        ResultMap resultMap = new ResultMap();
-        resultMap.setState(false);
-        resultMap.setMessage(message);
-        return resultMap;
+    public static ResultObject failResultMap(String message){
+        ResultObject resultObject = new ResultObject();
+        resultObject.setState(false);
+        resultObject.setMessage(message);
+        return resultObject;
     }
 }

@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: jmrh
@@ -47,4 +49,8 @@ public class Item implements Serializable {
     @Setter
     @Column(name = "field_name")
     private String fieldName;
+
+    @Getter
+    @Setter
+    private List<Item> childList = new ArrayList<>();
 }

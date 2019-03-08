@@ -3,7 +3,7 @@ package com.example.jmrh.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.jmrh.entity.Item;
-import com.example.jmrh.entity.ResultMap;
+import com.example.jmrh.entity.ResultObject;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.utils.ResultUtil;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * @program: jmrh
@@ -31,7 +30,7 @@ public class ItemController {
 
     @RequestMapping("/saveItem")
     @ResponseBody
-    public ResultMap saveItem(@RequestParam("itemData") String itemData, HttpServletRequest request){
+    public ResultObject saveItem(@RequestParam("itemData") String itemData, HttpServletRequest request){
         try {
             JSONObject jsonObject = JSON.parseObject(itemData);
             Item item = new Item();

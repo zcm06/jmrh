@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @create: 2019-03-07 23:08
  **/
 
-public class ResultMap implements Serializable {
+public class ResultObject implements Serializable {
 
     @Getter
     @Setter

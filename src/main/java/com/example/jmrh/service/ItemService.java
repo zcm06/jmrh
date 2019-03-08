@@ -3,6 +3,8 @@ package com.example.jmrh.service;
 import com.example.jmrh.entity.Item;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 public interface ItemService {
 
@@ -14,4 +16,8 @@ public interface ItemService {
     * @Date: 2019/3/7 
     */ 
     public Item save(Item item);
+
+    public Item getItemById(Long id);
+
+    public List<Item> getItemsByIds(List<Long> ids);
 }

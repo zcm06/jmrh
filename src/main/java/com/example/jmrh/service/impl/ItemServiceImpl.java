@@ -6,6 +6,8 @@ import com.example.jmrh.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @program: jmrh
  * @description:
@@ -22,5 +24,15 @@ public class ItemServiceImpl implements ItemService {
     public Item save(Item item) {
 
         return itemRepository.save(item);
+    }
+
+    @Override
+    public Item getItemById(Long id) {
+        return itemRepository.getOne(id);
+    }
+
+    @Override
+    public List<Item> getItemsByIds(List<Long> ids) {
+        return itemRepository.findAllById(ids);
     }
 }
