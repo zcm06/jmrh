@@ -4,16 +4,21 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.jmrh.entity.Item;
 import com.example.jmrh.entity.ResultObject;
+import com.example.jmrh.entity.vo.ItemVo;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.utils.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @program: jmrh
@@ -30,16 +35,56 @@ public class ItemController {
 
     @RequestMapping("/saveItem")
     @ResponseBody
-    public ResultObject saveItem(@RequestParam("itemData") String itemData, HttpServletRequest request){
+    public ResultObject saveItem(@RequestBody JSONObject itemData, HttpServletRequest request) {
         try {
-            JSONObject jsonObject = JSON.parseObject(itemData);
+//            JSONObject jsonObject = JSON.parseObject(itemData);
             Item item = new Item();
-            BeanUtils.copyProperties(jsonObject,item);
-            itemService.save(item);
-            return ResultUtil.successfulResultMap("添加成功！");
-        }catch (Exception e){
+            BeanUtils.copyProperties(item,itemData);
+            item = itemService.save(item);
+            return ResultUtil.successfulResultMap(item);
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResultUtil.successfulResultMap("添加失败！"+e.getMessage());
+            return ResultUtil.failResultMap("添加失败！");
+        }
+    }
+
+    @RequestMapping("/loadItemList")
+    @ResponseBody
+    public ResultObject loadItemList(HttpServletRequest request) {
+        try {
+            List<ItemVo> itemVoList = new ArrayList<ItemVo>();
+            List<Item> itemList = itemService.getAllItems();
+            loadItems(itemVoList, itemList);
+            return ResultUtil.successfulResultMap(itemVoList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failResultMap("初始化节点失败！");
+        }
+    }
+
+    private void loadItems(List<ItemVo> itemVoList, List<Item> itemList) {
+        ItemVo itemVo = null;
+        for (Item item : itemList) {
+            if (item.getItemLevel() == 1) {
+                itemVo = new ItemVo();
+                BeanUtils.copyProperties(itemVo,item);
+                itemVoList.add(itemVo);
+                appendChild(itemVo, itemList);
+            }
+        }
+
+
+    }
+
+    private void appendChild(ItemVo itemVo, List<Item> itemList) {
+        ItemVo child = null;
+        for (Item item : itemList) {
+            if (item.getParentId() != null && item.getParentId().equals(itemVo.getId()) ) {
+                child = new ItemVo();
+                BeanUtils.copyProperties(child,item);
+                itemVo.getChildList().add(child);
+                appendChild(child, itemList);
+            }
         }
     }
 }
