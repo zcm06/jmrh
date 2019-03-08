@@ -14,6 +14,7 @@ public class ResultUtil {
         ResultObject resultObject = new ResultObject();
         resultObject.setState(true);
         resultObject.setValue(obj);
+        resultObject.setCode(200);
         return resultObject;
     }
 
@@ -21,6 +22,7 @@ public class ResultUtil {
         ResultObject resultObject = new ResultObject();
         resultObject.setState(false);
         resultObject.setMessage(message);
+        resultObject.setCode(400);
         return resultObject;
     }
 }

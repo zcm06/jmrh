@@ -25,4 +25,8 @@ public class ResultObject implements Serializable {
     @Getter
     @Setter
     private boolean state;
+
+    @Getter
+    @Setter
+    private int code;
 }
