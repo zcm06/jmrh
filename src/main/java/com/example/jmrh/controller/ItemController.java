@@ -1,7 +1,5 @@
 package com.example.jmrh.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.jmrh.entity.Item;
 import com.example.jmrh.entity.ResultObject;
 import com.example.jmrh.entity.vo.ItemVo;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,42 +90,41 @@ public class ItemController {
 //        }
 //    }
 
-    /** 
-    * @Description: 加载子节点 
-    * @Param: [itemList] 
-    * @return: java.util.List<com.example.jmrh.entity.vo.ItemVo> 
-    * @Author: ZHANG CANMING
-    * @Date: 2019/3/9 
-    */ 
-    private List<ItemVo> loadChild(List<Item> itemList){
+    /**
+     * @Description: 加载子节点
+     * @Param: [itemList]
+     * @return: java.util.List<com.example.jmrh.entity.vo.ItemVo>
+     * @Author: ZHANG CANMING
+     * @Date: 2019/3/9
+     */
+    private List<ItemVo> loadChild(List<Item> itemList) {
 
         List<ItemVo> itemVoList = new ArrayList<>();
         ItemVo itemVo = null;
-        for (Item item:itemList){
+        for (Item item : itemList) {
             itemVo = new ItemVo();
             BeanUtils.copyProperties(item, itemVo);
             itemVoList.add(itemVo);
         }
-        if (itemVoList.size() <=1){
+        if (itemVoList.size() <= 1) {
             return itemVoList;
         }
 
-        for (ItemVo vo:itemVoList) {
-            for (ItemVo child:itemVoList){
-                if (vo.getId().equals(child.getParentId())){
+        for (ItemVo vo : itemVoList) {
+            for (ItemVo child : itemVoList) {
+                if (vo.getId().equals(child.getParentId())) {
                     vo.getChildList().add(child);
                 }
             }
         }
 
-        Iterator<ItemVo> iterator= itemVoList.iterator();
-        while (iterator.hasNext()){
+        Iterator<ItemVo> iterator = itemVoList.iterator();
+        while (iterator.hasNext()) {
             ItemVo next = iterator.next();
-            if(next.getChildList().isEmpty() && next.getParentId() != null){
+            if (next.getParentId() != null) {
                 iterator.remove();
             }
         }
-
         return itemVoList;
     }
 }
