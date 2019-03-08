@@ -35,11 +35,8 @@ public class ItemController {
 
     @RequestMapping("/saveItem")
     @ResponseBody
-    public ResultObject saveItem(@RequestBody JSONObject itemData, HttpServletRequest request) {
+    public ResultObject saveItem(@RequestBody Item item, HttpServletRequest request) {
         try {
-//            JSONObject jsonObject = JSON.parseObject(itemData);
-            Item item = new Item();
-            BeanUtils.copyProperties(item,itemData);
             item = itemService.save(item);
             return ResultUtil.successfulResultMap(item);
         } catch (Exception e) {
