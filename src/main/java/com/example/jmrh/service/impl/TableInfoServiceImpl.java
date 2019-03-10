@@ -34,7 +34,7 @@ public class TableInfoServiceImpl implements TableInfoService {
     private ItemService itemService;
 
     @Override
-    public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList)throws Exception {
+    public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList) throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         List<Long> itemIds = new ArrayList<Long>();
         if (tableInfoItemList != null && !tableInfoItemList.isEmpty()) {
@@ -61,16 +61,12 @@ public class TableInfoServiceImpl implements TableInfoService {
     }
 
     @Override
-    public TableInfo save(TableInfo tableInfo)throws Exception {
+    public TableInfo save(TableInfo tableInfo) throws Exception {
         return tableInfoRepository.save(tableInfo);
     }
 
     @Override
     public TableInfo queryTableInfoById(Long id) throws Exception {
-        Optional<TableInfo> optional= tableInfoRepository.findById(id);
-        if (optional == null){
-            return null;
-        }
-        return optional.get();
+        return tableInfoRepository.queryTableInfoById(id);
     }
 }

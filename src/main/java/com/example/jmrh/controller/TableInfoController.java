@@ -12,6 +12,7 @@ import com.example.jmrh.utils.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,7 +69,7 @@ public class TableInfoController {
 
     @RequestMapping("/queryTableInfo/{id}")
     @ResponseBody
-    public ResultObject queryTableInfo(@RequestParam("id") Long id,HttpServletRequest request){
+    public ResultObject queryTableInfo(@PathVariable("id") Long id, HttpServletRequest request){
         try {
             if (id == null){
                 throw new Exception("参数为空！");

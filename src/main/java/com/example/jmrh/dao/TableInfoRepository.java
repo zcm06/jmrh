@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TableInfoRepository extends JpaRepository<TableInfo,Long> {
+
+    public TableInfo queryTableInfoById(Long id);
 }
