@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @program: jmrh
@@ -72,8 +70,23 @@ public class TableInfoController {
     @ResponseBody
     public ResultObject queryTableInfo(@RequestParam("id") Long id,HttpServletRequest request){
         try {
+            if (id == null){
+                throw new Exception("参数为空！");
+            }
+            TableInfo tableInfo = tableInfoService.queryTableInfoById(id);
+            if (tableInfo == null){
+                throw new Exception("表单信息不存在！");
+            }
+            List<TableInfoItem> tableInfoItems= tableInfoItemService.queryTableInfoItemsByTableInfoId(id);
+            List<Long> itemIds = new ArrayList<>();
 
-            return ResultUtil.successfulResultMap(null);
+            for (TableInfoItem tableInfoItem:tableInfoItems){
+                itemIds.add(tableInfoItem.getItemId());
+            }
+            Map<String,Object> map = new HashMap<>();
+            map.put("tableInfo",tableInfo);
+            map.put("itemIds",itemIds);
+            return ResultUtil.successfulResultMap(map);
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.failResultMap("获取表单信息失败！"+e.getMessage());
