@@ -1,6 +1,7 @@
 package com.example.jmrh.service.impl;
 
 import com.example.jmrh.dao.TableInfoItemRepository;
+import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.service.TableInfoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,20 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
 
 
     @Override
-    public void batchSave(List<TableInfoItem> tableInfoItemList) {
+    public void batchSave(List<TableInfoItem> tableInfoItemList)throws Exception {
 
         tableInfoItemRepository.saveAll(tableInfoItemList);
     }
 
     @Override
-    public TableInfoItem save(TableInfoItem tableInfoItem) {
+    public TableInfoItem save(TableInfoItem tableInfoItem)throws Exception {
 
         return tableInfoItemRepository.save(tableInfoItem);
+    }
+
+    @Override
+    public List<TableInfoItem> queryTableInfoItemsByTableInfoId(Long tableInfoId)throws Exception{
+
+        return tableInfoItemRepository.queryTableInfoItemsByTableInfoId(tableInfoId);
     }
 }

@@ -15,11 +15,11 @@ public interface ItemService {
     * @Author: ZHANG CANMING
     * @Date: 2019/3/7 
     */ 
-    public Item save(Item item);
+    public Item save(Item item)throws Exception;
 
-    public Item getItemById(Long id);
+    public Item getItemById(Long id)throws Exception;
 
-    public List<Item> getItemsByIds(List<Long> ids);
+    public List<Item> getItemsByIds(List<Long> ids)throws Exception;
 
-    public List<Item> getAllItems();
+    public List<Item> getAllItems()throws Exception;
 }

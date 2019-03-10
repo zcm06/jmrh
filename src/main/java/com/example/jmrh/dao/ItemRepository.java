@@ -4,6 +4,8 @@ import com.example.jmrh.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @program: jmrh
  * @description: 项目repository
@@ -13,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemRepository extends JpaRepository<Item,Long> {
 
+    public List<Item> queryItemsByIdInOrderByFieldName(List<Long> ids);
 }

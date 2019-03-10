@@ -12,7 +12,9 @@ import java.util.List;
  **/
 public interface TableInfoItemService {
 
-    public void batchSave(List<TableInfoItem> tableInfoItemList);
+    public void batchSave(List<TableInfoItem> tableInfoItemList)throws Exception;
 
-    public TableInfoItem save(TableInfoItem tableInfoItem);
+    public TableInfoItem save(TableInfoItem tableInfoItem)throws Exception;
+
+    public List<TableInfoItem> queryTableInfoItemsByTableInfoId(Long tableInfoId)throws Exception;
 }

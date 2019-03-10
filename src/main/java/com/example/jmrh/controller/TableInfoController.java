@@ -68,4 +68,16 @@ public class TableInfoController {
         }
     }
 
+    @RequestMapping("/queryTableInfo/{id}")
+    @ResponseBody
+    public ResultObject queryTableInfo(@RequestParam("id") Long id,HttpServletRequest request){
+        try {
+
+            return ResultUtil.successfulResultMap(null);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("获取表单信息失败！"+e.getMessage());
+        }
+    }
+
 }

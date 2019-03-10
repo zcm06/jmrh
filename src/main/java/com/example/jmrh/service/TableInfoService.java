@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface TableInfoService {
 
-    public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList);
+    public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList)throws Exception;
 
-    public TableInfo save(TableInfo tableInfo);
+    public TableInfo save(TableInfo tableInfo)throws Exception;
+
+    public TableInfo queryTableInfoById(Long id)throws Exception;
 }

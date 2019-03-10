@@ -21,23 +21,23 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Override
-    public Item save(Item item) {
+    public Item save(Item item) throws Exception{
 
         return itemRepository.save(item);
     }
 
     @Override
-    public Item getItemById(Long id) {
+    public Item getItemById(Long id)throws Exception {
         return itemRepository.getOne(id);
     }
 
     @Override
-    public List<Item> getItemsByIds(List<Long> ids) {
+    public List<Item> getItemsByIds(List<Long> ids)throws Exception {
         return itemRepository.findAllById(ids);
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAllItems()throws Exception {
         return itemRepository.findAll();
     }
 }

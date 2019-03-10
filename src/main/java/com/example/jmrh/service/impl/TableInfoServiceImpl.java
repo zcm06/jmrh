@@ -10,12 +10,10 @@ import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: jmrh
@@ -36,7 +34,7 @@ public class TableInfoServiceImpl implements TableInfoService {
     private ItemService itemService;
 
     @Override
-    public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList) {
+    public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList)throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         List<Long> itemIds = new ArrayList<Long>();
         if (tableInfoItemList != null && !tableInfoItemList.isEmpty()) {
@@ -63,7 +61,16 @@ public class TableInfoServiceImpl implements TableInfoService {
     }
 
     @Override
-    public TableInfo save(TableInfo tableInfo) {
+    public TableInfo save(TableInfo tableInfo)throws Exception {
         return tableInfoRepository.save(tableInfo);
+    }
+
+    @Override
+    public TableInfo queryTableInfoById(Long id) throws Exception {
+        Optional<TableInfo> optional= tableInfoRepository.findById(id);
+        if (optional == null){
+            return null;
+        }
+        return optional.get();
     }
 }

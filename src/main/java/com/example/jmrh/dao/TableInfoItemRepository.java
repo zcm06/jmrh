@@ -4,6 +4,8 @@ import com.example.jmrh.entity.TableInfoItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @program: jmrh
  * @description:
@@ -12,4 +14,9 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface TableInfoItemRepository extends JpaRepository<TableInfoItem,Long> {
+
+
+    public List<TableInfoItem> queryTableInfoItemsByTableInfoId(Long tableInfoId);
+
+    public List<TableInfoItem> queryTableInfoItemsByItemId(Long itemId);
 }
