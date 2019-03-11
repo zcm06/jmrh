@@ -17,4 +17,6 @@ public interface TableInfoItemService {
     public TableInfoItem save(TableInfoItem tableInfoItem)throws Exception;
 
     public List<TableInfoItem> queryTableInfoItemsByTableInfoId(Long tableInfoId)throws Exception;
+
+    public List<TableInfoItem> queryTableInfoItemsByItemsId(List<Long> itemIds)throws Exception;
 }

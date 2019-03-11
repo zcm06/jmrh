@@ -39,4 +39,9 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
 
         return tableInfoItemRepository.queryTableInfoItemsByTableInfoId(tableInfoId);
     }
+
+    @Override
+    public List<TableInfoItem> queryTableInfoItemsByItemsId(List<Long> itemIds) throws Exception {
+        return null;
+    }
 }

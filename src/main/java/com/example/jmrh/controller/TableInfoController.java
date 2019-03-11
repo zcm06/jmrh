@@ -6,12 +6,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.jmrh.entity.ResultObject;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
+import com.example.jmrh.entity.vo.TableInfoVo;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import com.example.jmrh.utils.ResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,6 +76,7 @@ public class TableInfoController {
     @ResponseBody
     public ResultObject queryTableInfo(@PathVariable("id") Long id, HttpServletRequest request){
         try {
+
             if (id == null){
                 throw new Exception("参数为空！");
             }
@@ -91,6 +97,29 @@ public class TableInfoController {
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.failResultMap("获取表单信息失败！"+e.getMessage());
+        }
+    }
+
+    @RequestMapping("/queryTableInfoList")
+    @ResponseBody
+    public ResultObject queryTableInfoList(TableInfoVo vo,HttpServletRequest request){
+        try {
+            List<Long> tableInfoIds = null;
+            if (!ObjectUtils.isEmpty(vo.getItemIds())){
+                List<TableInfoItem> tableInfoItems= tableInfoItemService.queryTableInfoItemsByItemsId(vo.getItemIds());
+                if (!ObjectUtils.isEmpty(tableInfoItems)){
+                    tableInfoIds = new ArrayList<>();
+                    for (TableInfoItem tableInfoItem:tableInfoItems){
+                        tableInfoIds.add(tableInfoItem.getTableInfoId());
+                    }
+                }
+            }
+            Pageable pageable = PageRequest.of(vo.getPage(),vo.getSize());
+            Page<TableInfo> infos= tableInfoService.queryTableInfosByVo(vo,pageable,tableInfoIds);
+            return  ResultUtil.successfulResultMap(infos);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("查询失败！"+e.getMessage());
         }
     }
 

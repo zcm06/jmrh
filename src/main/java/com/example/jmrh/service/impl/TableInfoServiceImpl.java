@@ -5,14 +5,24 @@ import com.example.jmrh.dao.TableInfoRepository;
 import com.example.jmrh.entity.Item;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
+import com.example.jmrh.entity.vo.TableInfoVo;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.*;
 
 /**
@@ -68,5 +78,28 @@ public class TableInfoServiceImpl implements TableInfoService {
     @Override
     public TableInfo queryTableInfoById(Long id) throws Exception {
         return tableInfoRepository.queryTableInfoById(id);
+    }
+
+    @Override
+    public Page<TableInfo> queryTableInfosByVo(TableInfoVo vo, Pageable pageable,List<Long> tableInfoIds) throws Exception{
+
+
+        Specification<TableInfo> specification = new Specification<TableInfo>() {
+            @Override
+            public Predicate toPredicate(Root<TableInfo> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
+                List<Predicate> list = new ArrayList<>();
+                if (!StringUtils.isEmpty(vo.getCreditCode())){
+                    list.add(cb.like(root.get("creditCode"),"%"+vo.getCreditCode()+"%"));
+                }
+                if (!StringUtils.isEmpty(vo.getUnit())){
+                    list.add(cb.like(root.get("unit"),"%"+vo.getUnit()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(tableInfoIds)){
+
+                }
+                return cb.and(list.toArray(new Predicate[list.size()]));
+            }
+        };
+       return tableInfoRepository.findAll(specification,pageable);
     }
 }

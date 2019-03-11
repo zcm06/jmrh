@@ -19,4 +19,6 @@ public interface TableInfoItemRepository extends JpaRepository<TableInfoItem,Lon
     public List<TableInfoItem> queryTableInfoItemsByTableInfoId(Long tableInfoId);
 
     public List<TableInfoItem> queryTableInfoItemsByItemId(Long itemId);
+
+    public List<TableInfoItem> queryDistinctByItemIdIn(List<Long> itemIds);
 }
