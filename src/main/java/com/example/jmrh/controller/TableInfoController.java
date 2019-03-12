@@ -3,10 +3,12 @@ package com.example.jmrh.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.jmrh.entity.Address;
 import com.example.jmrh.entity.ResultObject;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.entity.vo.TableInfoVo;
+import com.example.jmrh.service.AddressService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import com.example.jmrh.utils.ResultUtil;
@@ -42,6 +44,9 @@ public class TableInfoController {
     @Autowired
     private TableInfoItemService tableInfoItemService;
 
+    @Autowired
+    private AddressService addressService;
+
     @RequestMapping("/saveTableInfo")
     @ResponseBody
     public ResultObject saveTableInfo(@RequestParam("tableInfoData") String tableInfoData, HttpServletRequest request) {
@@ -51,6 +56,7 @@ public class TableInfoController {
             BeanUtils.copyProperties(jsonObject, tableInfo);
             tableInfo = tableInfoService.save(tableInfo);
             JSONArray itemList = jsonObject.getJSONArray("itemList");
+            JSONArray addressList = jsonObject.getJSONArray("addressList");
             Iterator<Object> iterator = itemList.iterator();
             TableInfoItem tableInfoItem = null;
 
@@ -63,8 +69,20 @@ public class TableInfoController {
                 tableInfoItemList.add(tableInfoItem);
             }
 
+            tableInfoItemService.deleteTableInfoItemsByTableInfoId(tableInfo.getId());
             tableInfoService.save(tableInfo, tableInfoItemList);
-
+            Address address = null;
+            Map<String,String> map = null;
+            List<Address> list = new ArrayList<>();
+            for (Object obj:addressList) {
+                address = new Address();
+                map = ( Map<String,String>) obj;
+                address.setTableInfoId(tableInfo.getId());
+                BeanUtils.copyProperties(map,address);
+                list.add(address);
+            }
+            addressService.deleteByTableInfoId(tableInfo.getId());
+            addressService.batchSave(list);
             return ResultUtil.successfulResultMap("");
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,6 +132,7 @@ public class TableInfoController {
                     }
                 }
             }
+
             Pageable pageable = PageRequest.of(vo.getPage(),vo.getSize());
             Page<TableInfo> infos= tableInfoService.queryTableInfosByVo(vo,pageable,tableInfoIds);
             return  ResultUtil.successfulResultMap(infos);

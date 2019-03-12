@@ -67,22 +67,22 @@ public class TableInfo {
     @Getter
     @Setter
     @Column(name = "registered_capital")
-    private String registeredCapital;
+    private double registeredCapital;
 
     @Getter
     @Setter
     @Column(name = "fixed_total_assets")
-    private String fixedTotalAssets;
+    private double fixedTotalAssets;
 
     @Getter
     @Setter
     @Column(name = "annual_main_business_income")
-    private String annualMainBusinessIncome;
+    private double annualMainBusinessIncome;
 
     @Getter
     @Setter
     @Column(name = "annual_rd_investment")
-    private String annualRdInvestment;
+    private double annualRdInvestment;
 
     @Getter
     @Setter

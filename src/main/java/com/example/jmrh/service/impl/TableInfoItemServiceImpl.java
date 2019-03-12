@@ -42,6 +42,11 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
 
     @Override
     public List<TableInfoItem> queryTableInfoItemsByItemsId(List<Long> itemIds) throws Exception {
-        return null;
+        return tableInfoItemRepository.queryTableInfoItemsByItemIdIn(itemIds);
+    }
+
+    @Override
+    public void deleteTableInfoItemsByTableInfoId(Long tableInfoId) throws Exception {
+        tableInfoItemRepository.deleteTableInfoItemsByTableInfoId(tableInfoId);
     }
 }

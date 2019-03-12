@@ -23,6 +23,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -45,27 +46,7 @@ public class TableInfoServiceImpl implements TableInfoService {
 
     @Override
     public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList) throws Exception {
-        Map<String, String> map = new HashMap<String, String>();
-        List<Long> itemIds = new ArrayList<Long>();
-        if (tableInfoItemList != null && !tableInfoItemList.isEmpty()) {
-            for (TableInfoItem tableInfoItem : tableInfoItemList) {
-                itemIds.add(tableInfoItem.getItemId());
-            }
-            tableInfoItemService.batchSave(tableInfoItemList);
-        }
-        List<Item> itemList = itemService.getItemsByIds(itemIds);
-        String fieldName = null;
-        String itemName = null;
-        for (Item item : itemList) {
-            fieldName = item.getFieldName();
-            itemName = item.getItemName();
-            if (map.get(item.getFieldName()) != null) {
-                itemName = map.get(fieldName) + "," + itemName;
 
-            }
-            map.put(fieldName, itemName);
-        }
-        BeanUtils.copyProperties(map, tableInfo);
         tableInfo = tableInfoRepository.save(tableInfo);
         return tableInfo;
     }
@@ -83,7 +64,6 @@ public class TableInfoServiceImpl implements TableInfoService {
     @Override
     public Page<TableInfo> queryTableInfosByVo(TableInfoVo vo, Pageable pageable,List<Long> tableInfoIds) throws Exception{
 
-
         Specification<TableInfo> specification = new Specification<TableInfo>() {
             @Override
             public Predicate toPredicate(Root<TableInfo> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -95,7 +75,52 @@ public class TableInfoServiceImpl implements TableInfoService {
                     list.add(cb.like(root.get("unit"),"%"+vo.getUnit()+"%"));
                 }
                 if (!ObjectUtils.isEmpty(tableInfoIds)){
-
+                    list.add(cb.in(root.get("id")).value(tableInfoIds));
+                }
+                if (!ObjectUtils.isEmpty(vo.getUnitNature())){
+                    list.add(cb.like(root.get("unitNature"),"%"+vo.getUnitNature()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getLegalRepresentative())){
+                    list.add(cb.like(root.get("legalRepresentative"),"%"+vo.getLegalRepresentative()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartUnitCreateTime()) && !ObjectUtils.isEmpty(vo.getEndUnitCreateTime())){
+                    list.add(cb.between(root.get("unitCreateTime"),vo.getStartUnitCreateTime(),vo.getEndUnitCreateTime()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartAnnualMainBusinessIncome()) && !ObjectUtils.isEmpty(vo.getEndAnnualMainBusinessIncome())){
+                    list.add(cb.between(root.get("annualMainBusinessIncome"),vo.getStartAnnualMainBusinessIncome(),vo.getEndAnnualMainBusinessIncome()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartRegisteredCapital()) && !ObjectUtils.isEmpty(vo.getEndRegisteredCapital())){
+                    list.add(cb.between(root.get("registeredCapital"),vo.getStartRegisteredCapital(),vo.getEndRegisteredCapital()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartFixedTotalAssets()) && !ObjectUtils.isEmpty(vo.getEndFixedTotalAssets())){
+                    list.add(cb.between(root.get("fixedTotalAssets"),vo.getStartFixedTotalAssets(),vo.getEndFixedTotalAssets()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartAnnualRdInvestment()) && !ObjectUtils.isEmpty(vo.getEndAnnualRdInvestment())){
+                    list.add(cb.between(root.get("annualRdInvestment"),vo.getStartAnnualRdInvestment(),vo.getEndAnnualRdInvestment()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartTotalPeople()) && !ObjectUtils.isEmpty(vo.getEndTotalPeople())){
+                    list.add(cb.between(root.get("totalPeople"),vo.getStartTotalPeople(),vo.getEndTotalPeople()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getStartDevelopersNumber()) && !ObjectUtils.isEmpty(vo.getEndDevelopersNumber())){
+                    list.add(cb.between(root.get("developersNumber"),vo.getStartDevelopersNumber(),vo.getEndDevelopersNumber()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getBusinessScope())){
+                    list.add(cb.like(root.get("businessScope"),"%"+vo.getBusinessScope()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getMainProducts())){
+                    list.add(cb.like(root.get("mainProducts"),"%"+vo.getMainProducts()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getHightechEnterprises())){
+                    list.add(cb.equal(root.get("hightechEnterprises"),vo.getHightechEnterprises()));
+                }
+                if (!ObjectUtils.isEmpty(vo.getRegisteredAddress())){
+                    list.add(cb.like(root.get("registeredAddress"),"%"+vo.getRegisteredAddress()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getResearchProductionAddress())){
+                    list.add(cb.like(root.get("researchProductionAddress"),"%"+vo.getResearchProductionAddress()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getContactAddress())){
+                    list.add(cb.like(root.get("contactAddress"),"%"+vo.getContactAddress()+"%"));
                 }
                 return cb.and(list.toArray(new Predicate[list.size()]));
             }

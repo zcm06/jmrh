@@ -19,4 +19,6 @@ public interface TableInfoItemService {
     public List<TableInfoItem> queryTableInfoItemsByTableInfoId(Long tableInfoId)throws Exception;
 
     public List<TableInfoItem> queryTableInfoItemsByItemsId(List<Long> itemIds)throws Exception;
+
+    public void deleteTableInfoItemsByTableInfoId(Long tableInfoId)throws Exception;
 }

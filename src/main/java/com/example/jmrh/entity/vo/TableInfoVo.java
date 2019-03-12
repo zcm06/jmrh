@@ -1,5 +1,6 @@
 package com.example.jmrh.entity.vo;
 
+import com.example.jmrh.entity.Address;
 import com.example.jmrh.entity.Item;
 import com.example.jmrh.entity.TableInfo;
 import lombok.Getter;
@@ -25,6 +26,9 @@ public class TableInfoVo extends TableInfo {
     @Setter
     private List<Long> itemIds = new ArrayList<Long>();
 
+    @Getter
+    @Setter
+    private List<Address> addressList = new ArrayList<>();
 
     @Getter
     @Setter
@@ -42,5 +46,51 @@ public class TableInfoVo extends TableInfo {
     @Setter
     private Date endUnitCreateTime;
 
+    @Getter
+    @Setter
+    private double startRegisteredCapital;
 
+    @Getter
+    @Setter
+    private double endRegisteredCapital;
+
+    @Getter
+    @Setter
+    private double startFixedTotalAssets;
+
+    @Getter
+    @Setter
+    private double endFixedTotalAssets;
+
+    @Getter
+    @Setter
+    private double startAnnualMainBusinessIncome;
+
+    @Getter
+    @Setter
+    private double endAnnualMainBusinessIncome;
+
+    @Getter
+    @Setter
+    private double startAnnualRdInvestment;
+
+    @Getter
+    @Setter
+    private double endAnnualRdInvestment;
+
+    @Getter
+    @Setter
+    private int startTotalPeople;
+
+    @Getter
+    @Setter
+    private int endTotalPeople;
+
+    @Getter
+    @Setter
+    private int startDevelopersNumber;
+
+    @Getter
+    @Setter
+    private int endDevelopersNumber;
 }
