@@ -55,7 +55,7 @@ public class RsaUtil {
     }
 
     public static String decode(String data,String privateKey)throws Exception{
-        byte[] decodeData= Base64.decodeBase64(data);
+        byte[] decodeData = Base64.decodeBase64(data);
         byte[] decrypt = Base64.decodeBase64(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decrypt));
         //RSA解密

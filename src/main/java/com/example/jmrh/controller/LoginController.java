@@ -35,6 +35,8 @@ public class LoginController {
             if (user1 == null){
                 throw new Exception("用户名或密码错误！");
             }
+
+            String encode = RsaUtil.encode("111",RsaUtil.getKeymMap().get("publicKey"));
             String password  = user.getPassword();
             String privateKey = RsaUtil.getKeymMap().get("privateKey");
             String decodePassword = RsaUtil.decode(password,privateKey);
