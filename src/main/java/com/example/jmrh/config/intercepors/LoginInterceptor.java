@@ -24,4 +24,5 @@ public class LoginInterceptor implements HandlerInterceptor {
         User user = (User)httpSession.getAttribute("user");
         return user!=null;
     }
+
 }
