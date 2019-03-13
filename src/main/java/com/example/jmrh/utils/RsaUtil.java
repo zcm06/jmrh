@@ -1,7 +1,8 @@
 package com.example.jmrh.utils;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.Cipher;
-import java.io.UnsupportedEncodingException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -9,7 +10,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,25 +38,25 @@ public class RsaUtil {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
-        String publicKeyString = new String(Base64.getEncoder().encode(publicKey.getEncoded()),"UTF-8");
-        String privateKeyString = new String(Base64.getEncoder().encode(privateKey.getEncoded()),"UTF-8");
+        String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded()),"UTF-8");
+        String privateKeyString = new String(Base64.encodeBase64(privateKey.getEncoded()),"UTF-8");
 
         keymMap.put("publicKey",publicKeyString);
         keymMap.put("privateKey",privateKeyString);
     }
     public static String encode(String data,String publicKey)throws Exception{
 
-        byte[] encrypt = Base64.getDecoder().decode(publicKey);
+        byte[] encrypt = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(encrypt));
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-        String outStr = new String(Base64.getEncoder().encode(cipher.doFinal(data.getBytes("UTF-8"))),"UTF-8");
+        String outStr = new String(Base64.encodeBase64(cipher.doFinal(data.getBytes("UTF-8"))),"UTF-8");
         return outStr;
     }
 
     public static String decode(String data,String privateKey)throws Exception{
-        byte[] decodeData= Base64.getDecoder().decode(data);
-        byte[] decrypt = Base64.getDecoder().decode(privateKey);
+        byte[] decodeData= Base64.decodeBase64(data);
+        byte[] decrypt = Base64.decodeBase64(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decrypt));
         //RSA解密
         Cipher cipher2 = Cipher.getInstance("RSA");
