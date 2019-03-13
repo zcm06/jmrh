@@ -17,6 +17,7 @@ public class Address {
 
     @Getter
     @Setter
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

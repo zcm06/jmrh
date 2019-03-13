@@ -69,7 +69,7 @@ public class TableInfoController {
                 tableInfoItemList.add(tableInfoItem);
             }
 
-            tableInfoItemService.deleteTableInfoItemsByTableInfoId(tableInfo.getId());
+            tableInfoItemService.deleteTableInfoItemsByTableInfoId(tableInfo.getId());//先删除
             tableInfoService.save(tableInfo, tableInfoItemList);
             Address address = null;
             Map<String,String> map = null;
@@ -81,7 +81,7 @@ public class TableInfoController {
                 BeanUtils.copyProperties(map,address);
                 list.add(address);
             }
-            addressService.deleteByTableInfoId(tableInfo.getId());
+            addressService.deleteByTableInfoId(tableInfo.getId());//先删除
             addressService.batchSave(list);
             return ResultUtil.successfulResultMap("");
         } catch (Exception e) {
