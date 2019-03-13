@@ -55,12 +55,13 @@ public class RsaUtil {
     }
 
     public static String decode(String data,String privateKey)throws Exception{
+        byte[] decodeData= Base64.getDecoder().decode(data);
         byte[] decrypt = Base64.getDecoder().decode(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decrypt));
         //RSA解密
         Cipher cipher2 = Cipher.getInstance("RSA");
         cipher2.init(Cipher.DECRYPT_MODE, priKey);
-        String decryptStr = new String(cipher2.doFinal(Base64.getDecoder().decode(data.getBytes("UTF-8"))),"UTF-8");
+        String decryptStr = new String(cipher2.doFinal(decodeData),"UTF-8");
         return decryptStr;
     }
 

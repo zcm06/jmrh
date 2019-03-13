@@ -7,6 +7,7 @@ import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.RsaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,7 +28,7 @@ public class LoginController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public ResultObject login(User user, HttpServletRequest request){
+    public ResultObject login(@RequestBody User user, HttpServletRequest request){
         try {
             String userName = user.getUserName();
             User user1 = userService.queryUserByUserName(userName);
