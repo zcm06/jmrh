@@ -5,6 +5,7 @@ import com.example.jmrh.entity.User;
 import com.example.jmrh.service.UserService;
 import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.RsaUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,6 @@ public class LoginController {
                 throw new Exception("用户名或密码错误！");
             }
 
-            String encode = RsaUtil.encode("111",RsaUtil.getKeymMap().get("publicKey"));
             String password  = user.getPassword();
             String privateKey = RsaUtil.getKeymMap().get("privateKey");
             String decodePassword = RsaUtil.decode(password,privateKey);

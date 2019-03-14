@@ -50,8 +50,8 @@ public class RsaUtil {
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(encrypt));
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-        String outStr = new String(Base64.encodeBase64(cipher.doFinal(data.getBytes("UTF-8"))),"UTF-8");
-        return outStr;
+//        String outStr = new String(Base64.encodeBase64(cipher.doFinal(data.getBytes("UTF-8"))),"UTF-8");
+        return Base64.encodeBase64String(cipher.doFinal(data.getBytes("UTF-8")));
     }
 
     public static String decode(String data,String privateKey)throws Exception{
@@ -66,6 +66,8 @@ public class RsaUtil {
     }
 
     public static Map<String,String> getKeymMap(){
+
+
         return keymMap;
     }
 }

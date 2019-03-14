@@ -1,6 +1,7 @@
 package com.example.jmrh.config;
 
 import com.example.jmrh.config.intercepors.LoginInterceptor;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,5 +19,22 @@ public class WebConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/loginController","/commonController");
 
     }
+
+    // 设置跨域访问
+
+    @Override
+
+    public void addCorsMappings(CorsRegistry registry) {
+
+        registry.addMapping("/**")
+
+                .allowedOrigins("*")
+
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE")
+
+                .allowCredentials(true);
+
+    }
+
 
 }
