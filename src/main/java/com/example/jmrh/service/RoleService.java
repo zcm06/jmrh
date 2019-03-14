@@ -16,5 +16,5 @@ public interface RoleService {
 
     public Role save(Role role)throws Exception;
 
-    public void deleteById()throws Exception;
+    public void deleteById(Long id)throws Exception;
 }
