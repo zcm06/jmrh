@@ -5,4 +5,6 @@ import com.example.jmrh.entity.User;
 public interface UserService {
 
     public User queryUserByUserName(String userName) throws Exception;
+
+    public User save(User user)throws Exception;
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @program: jmrh
@@ -42,6 +43,9 @@ public class LoginController {
             String privateKey = RsaUtil.getKeymMap().get("privateKey");
             String decodePassword = RsaUtil.decode(password,privateKey);
             if (user1.getPassword().equals(decodePassword)){
+                user1.setLastLoginTime(new Date());
+                userService.save(user1);//更新登录时间
+                user1.setPassword("");
                 request.getSession().setAttribute("user",user1);
                 return ResultUtil.successfulResultMap("登录成功！");
             }else {
@@ -53,5 +57,17 @@ public class LoginController {
         }
     }
 
+
+    @RequestMapping("/logout")
+    @ResponseBody
+    public ResultObject logout(HttpServletRequest request){
+        try {
+            request.getSession().removeAttribute("user");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("注销失败！");
+        }
+        return ResultUtil.successfulResultMap("注销成功！");
+    }
 
 }

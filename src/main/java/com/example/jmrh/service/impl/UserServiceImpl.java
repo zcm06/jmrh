@@ -25,4 +25,9 @@ public class UserServiceImpl implements UserService {
 
         return userReposity.queryUserByUserName(userName);
     }
+
+    @Override
+    public User save(User user) throws Exception {
+        return userReposity.save(user);
+    }
 }

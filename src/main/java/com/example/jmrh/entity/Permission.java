@@ -4,42 +4,42 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @program: jmrh
  * @description:
  * @author: ZHANG CANMING
- * @create: 2019-03-13 20:46
+ * @create: 2019-03-14 21:54
  **/
 @Entity
-@Table(name = "jmrh_user")
-public class User {
+@Table(name = "jmrh_permission")
+public class Permission {
 
     @Id
     @Getter
     @Setter
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Getter
     @Setter
-    @Column(name = "username")
-    private String userName;
+    private String name;
 
     @Getter
     @Setter
-    @Column(name = "password")
-    private String password;
+    private String url;
 
     @Getter
     @Setter
-    @Column(name = "city")
-    private String city;
+    private int order;
 
     @Getter
     @Setter
-    @Column(name = "last_login_time")
-    private Date lastLoginTime;
+    @Column(name = "parent_id")
+    private Long parentId;
+
+    @Getter
+    @Setter
+    @Column(name = "permission_level")
+    private int permissionLevel;
 }
