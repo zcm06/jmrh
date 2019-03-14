@@ -38,6 +38,7 @@ public class LoginController {
             }
 
             String password  = user.getPassword();
+            password = password.replace("%2B","+");
             String privateKey = RsaUtil.getKeymMap().get("privateKey");
             String decodePassword = RsaUtil.decode(password,privateKey);
             if (user1.getPassword().equals(decodePassword)){
