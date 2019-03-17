@@ -2,6 +2,7 @@ package com.example.jmrh.service.impl;
 
 import com.example.jmrh.dao.TableInfoItemRepository;
 import com.example.jmrh.dao.TableInfoRepository;
+import com.example.jmrh.entity.Address;
 import com.example.jmrh.entity.Item;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -40,6 +43,9 @@ public class TableInfoServiceImpl implements TableInfoService {
 
     @Autowired
     private TableInfoItemService tableInfoItemService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     private ItemService itemService;
@@ -113,18 +119,23 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(vo.getHightechEnterprises())){
                     list.add(cb.equal(root.get("hightechEnterprises"),vo.getHightechEnterprises()));
                 }
-                if (!ObjectUtils.isEmpty(vo.getRegisteredAddress())){
-                    list.add(cb.like(root.get("registeredAddress"),"%"+vo.getRegisteredAddress()+"%"));
-                }
-                if (!ObjectUtils.isEmpty(vo.getResearchProductionAddress())){
-                    list.add(cb.like(root.get("researchProductionAddress"),"%"+vo.getResearchProductionAddress()+"%"));
-                }
-                if (!ObjectUtils.isEmpty(vo.getContactAddress())){
-                    list.add(cb.like(root.get("contactAddress"),"%"+vo.getContactAddress()+"%"));
-                }
+//                if (!ObjectUtils.isEmpty(vo.getRegisteredAddress())){
+//                    list.add(cb.like(root.get("registeredAddress"),"%"+vo.getRegisteredAddress()+"%"));
+//                }
+//                if (!ObjectUtils.isEmpty(vo.getResearchProductionAddress())){
+//                    list.add(cb.like(root.get("researchProductionAddress"),"%"+vo.getResearchProductionAddress()+"%"));
+//                }
+//                if (!ObjectUtils.isEmpty(vo.getContactAddress())){
+//                    list.add(cb.like(root.get("contactAddress"),"%"+vo.getContactAddress()+"%"));
+//                }
                 return cb.and(list.toArray(new Predicate[list.size()]));
             }
         };
+
+
+
        return tableInfoRepository.findAll(specification,pageable);
     }
+
+
 }

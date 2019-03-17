@@ -3,7 +3,9 @@ package com.example.jmrh.config.intercepors;
 import com.alibaba.fastjson.JSON;
 import com.example.jmrh.entity.ResultObject;
 import com.example.jmrh.entity.User;
+import com.example.jmrh.entity.vo.UserVo;
 import com.example.jmrh.utils.ResultUtil;
+import com.example.jmrh.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -25,9 +27,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession httpSession = request.getSession();
-        User user = (User)httpSession.getAttribute("user");
-        if (user == null){
+        UserVo userVo = UserUtil.getUser(request);
+        if (userVo == null){
             ajaxResponse(response,request);
             return false;
         }else {

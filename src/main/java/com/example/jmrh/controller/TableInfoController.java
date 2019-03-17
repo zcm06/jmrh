@@ -12,6 +12,7 @@ import com.example.jmrh.service.AddressService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import com.example.jmrh.utils.ResultUtil;
+import com.example.jmrh.utils.UserUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -49,11 +47,13 @@ public class TableInfoController {
 
     @RequestMapping("/saveTableInfo")
     @ResponseBody
-    public ResultObject saveTableInfo(@RequestParam("tableInfoData") String tableInfoData, HttpServletRequest request) {
+    public ResultObject saveTableInfo(@RequestBody JSONObject jsonObject, HttpServletRequest request) {
         try {
             TableInfo tableInfo = new TableInfo();
-            JSONObject jsonObject = JSON.parseObject(tableInfoData);
+//            JSONObject jsonObject = JSON.parseObject(tableInfoData);
             BeanUtils.copyProperties(jsonObject, tableInfo);
+            tableInfo.setCreateUserId(UserUtil.getUser(request).getId());
+            tableInfo.setCreateTime(new Date());
             tableInfo = tableInfoService.save(tableInfo);
             JSONArray itemList = jsonObject.getJSONArray("itemList");
             JSONArray addressList = jsonObject.getJSONArray("addressList");
