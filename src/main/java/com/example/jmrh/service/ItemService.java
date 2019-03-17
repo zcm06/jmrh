@@ -22,4 +22,6 @@ public interface ItemService {
     public List<Item> getItemsByIds(List<Long> ids)throws Exception;
 
     public List<Item> getAllItems()throws Exception;
+
+    public void deleteById(Long id)throws Exception;
 }

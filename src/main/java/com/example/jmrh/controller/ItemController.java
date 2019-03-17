@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,18 @@ public class ItemController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.failResultMap("添加失败！");
+        }
+    }
+
+    @RequestMapping("/deleteItem")
+    @ResponseBody
+    public ResultObject deleteItem(@RequestParam("id") Long id,HttpServletRequest request){
+        try {
+            itemService.deleteById(id);
+            return ResultUtil.successfulResultMap("");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failResultMap("初始化节点失败！");
         }
     }
 
