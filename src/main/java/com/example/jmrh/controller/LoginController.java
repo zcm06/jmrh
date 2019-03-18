@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @program: jmrh
@@ -63,7 +61,7 @@ public class LoginController {
                 throw new Exception("用户名或密码错误！");
             }
 
-            user1.setLastLoginTime(new Date());
+            user1.setLastLoginTime(Calendar.getInstance(Locale.CHINA).getTime());
             userService.save(user1);//更新登录时间
             user1.setPassword("");
             UserVo userVo = setRole(user1);
