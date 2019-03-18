@@ -90,6 +90,18 @@ public class ItemController {
         }
     }
 
+    @RequestMapping("/queryItemById")
+    @ResponseBody
+    public ResultObject queryItemById(HttpServletRequest request) {
+        try {
+            Long id = Long.parseLong(request.getParameter("id"));
+            return ResultUtil.successfulResultMap(itemService.getItemById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failResultMap("删除失败！");
+        }
+    }
+
 //    private void loadItems(List<ItemVo> itemVoList, List<Item> itemList) {
 //        ItemVo itemVo = null;
 //        for (Item item : itemList) {
