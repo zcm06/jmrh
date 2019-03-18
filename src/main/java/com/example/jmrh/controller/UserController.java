@@ -37,7 +37,7 @@ public class UserController {
         try {
             String userName = user.getUserName();
             User user1 = userService.queryUserByUserName(userName);
-            if (user1 != null) {
+            if (user1 != null && !user1.getId().equals(user.getId())) {
                 throw new Exception("用户名已存在！");
             }
             String password = user.getPassword();
@@ -51,24 +51,6 @@ public class UserController {
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.failResultMap("新增失败！"+e.getMessage());
-        }
-    }
-
-    @RequestMapping("/updateUser")
-    @ResponseBody
-    public ResultObject updateUser(@RequestBody User user, HttpServletRequest request){
-        try {
-            String password = user.getPassword();
-            password = password.replace("%2B", "+");
-            String privateKey = RsaUtil.getKeymMap().get("privateKey");
-            String decodePassword = RsaUtil.decode(password, privateKey);
-            String md5Password = Md5Util.md5(decodePassword);
-            user.setPassword(md5Password);
-            userService.save(user);
-            return ResultUtil.successfulResultMap("修改成功!");
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResultUtil.failResultMap("修改失败！"+e.getMessage());
         }
     }
 
