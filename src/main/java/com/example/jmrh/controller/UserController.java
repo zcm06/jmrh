@@ -47,10 +47,43 @@ public class UserController {
             String md5Password = Md5Util.md5(decodePassword);
             user.setPassword(md5Password);
             userService.save(user);
-            return ResultUtil.successfulResultMap("新增成功!");
+            return ResultUtil.successfulResultMap("保存成功!");
         }catch (Exception e){
             e.printStackTrace();
-            return ResultUtil.failResultMap("新增失败！"+e.getMessage());
+            return ResultUtil.failResultMap("保存失败！"+e.getMessage());
+        }
+    }
+
+    @RequestMapping("/updatePassword")
+    @ResponseBody
+    public ResultObject updatePassword(@RequestBody User user, HttpServletRequest request){
+        try {
+            String password = user.getPassword();
+            password = password.replace("%2B", "+");
+            String privateKey = RsaUtil.getKeymMap().get("privateKey");
+            String decodePassword = RsaUtil.decode(password, privateKey);
+            String md5Password = Md5Util.md5(decodePassword);
+            User user1 = userService.queryUserById(user.getId());
+            user1.setPassword(md5Password);
+            userService.save(user1);
+            return ResultUtil.successfulResultMap("保存成功!");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("保存失败！"+e.getMessage());
+        }
+    }
+
+    @RequestMapping("/updateUser")
+    @ResponseBody
+    public ResultObject updateUser(@RequestBody User user, HttpServletRequest request){
+        try {
+            User user1 = userService.queryUserById(user.getId());
+            BeanUtils.copyProperties(user,user1);
+            userService.save(user1);
+            return ResultUtil.successfulResultMap("修改成功!");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("修改失败！"+e.getMessage());
         }
     }
 
