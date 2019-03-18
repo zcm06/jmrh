@@ -9,6 +9,7 @@ import com.example.jmrh.entity.vo.UserVo;
 import com.example.jmrh.service.RoleService;
 import com.example.jmrh.service.UserRoleService;
 import com.example.jmrh.service.UserService;
+import com.example.jmrh.utils.Md5Util;
 import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.RsaUtil;
 import com.example.jmrh.utils.UserUtil;
@@ -58,16 +59,17 @@ public class LoginController {
             password = password.replace("%2B", "+");
             String privateKey = RsaUtil.getKeymMap().get("privateKey");
             String decodePassword = RsaUtil.decode(password, privateKey);
-            if (user1.getPassword().equals(decodePassword)) {
-                user1.setLastLoginTime(new Date());
-                userService.save(user1);//更新登录时间
-                user1.setPassword("");
-                UserVo userVo = setRole(user1);
-                UserUtil.setUser(userVo,request);
-                return ResultUtil.successfulResultMap("登录成功！");
-            } else {
+            if (!Md5Util.verify(decodePassword, user1.getPassword())) {
                 throw new Exception("用户名或密码错误！");
             }
+
+            user1.setLastLoginTime(new Date());
+            userService.save(user1);//更新登录时间
+            user1.setPassword("");
+            UserVo userVo = setRole(user1);
+            UserUtil.setUser(userVo, request);
+            return ResultUtil.successfulResultMap("登录成功！");
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.failResultMap("登录失败！" + e.getMessage());
