@@ -40,4 +40,9 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getAllItems()throws Exception {
         return itemRepository.findAll();
     }
+
+    @Override
+    public void deleteById(Long id) throws Exception {
+        itemRepository.deleteById(id);
+    }
 }
