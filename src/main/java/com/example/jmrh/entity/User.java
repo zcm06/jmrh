@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -42,5 +41,5 @@ public class User {
     @Getter
     @Setter
     @Column(name = "last_login_time")
-    private Timestamp lastLoginTime;
+    private Date lastLoginTime;
 }
