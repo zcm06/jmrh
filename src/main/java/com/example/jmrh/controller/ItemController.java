@@ -77,6 +77,19 @@ public class ItemController {
         }
     }
 
+    @RequestMapping("/deleteItem")
+    @ResponseBody
+    public ResultObject deleteItem(HttpServletRequest request) {
+        try {
+            Long id = Long.parseLong(request.getParameter("id"));
+            itemService.deleteById(id);
+            return ResultUtil.successfulResultMap("删除成功！");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failResultMap("删除失败！");
+        }
+    }
+
 //    private void loadItems(List<ItemVo> itemVoList, List<Item> itemList) {
 //        ItemVo itemVo = null;
 //        for (Item item : itemList) {
