@@ -82,8 +82,8 @@ public class ItemController {
     @ResponseBody
     public ResultObject queryItemById(HttpServletRequest request) {
         try {
-            Long id = Long.parseLong(request.getParameter("id"));
-            return ResultUtil.successfulResultMap(itemService.getItemById(id));
+            String id = request.getParameter("id");
+            return ResultUtil.successfulResultMap(itemService.getItemById(Long.parseLong(id)));
         } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.failResultMap("删除失败！");
