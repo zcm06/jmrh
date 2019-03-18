@@ -50,18 +50,6 @@ public class ItemController {
         }
     }
 
-    @RequestMapping("/deleteItem")
-    @ResponseBody
-    public ResultObject deleteItem(@RequestParam("id") Long id,HttpServletRequest request){
-        try {
-            itemService.deleteById(id);
-            return ResultUtil.successfulResultMap("");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.failResultMap("初始化节点失败！");
-        }
-    }
-
     @RequestMapping("/loadItemList")
     @ResponseBody
     public ResultObject loadItemList(HttpServletRequest request) {
