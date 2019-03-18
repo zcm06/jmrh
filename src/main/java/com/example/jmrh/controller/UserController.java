@@ -54,6 +54,24 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/updateUser")
+    @ResponseBody
+    public ResultObject updateUser(@RequestBody User user, HttpServletRequest request){
+        try {
+            String password = user.getPassword();
+            password = password.replace("%2B", "+");
+            String privateKey = RsaUtil.getKeymMap().get("privateKey");
+            String decodePassword = RsaUtil.decode(password, privateKey);
+            String md5Password = Md5Util.md5(decodePassword);
+            user.setPassword(md5Password);
+            userService.save(user);
+            return ResultUtil.successfulResultMap("修改成功!");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("修改失败！"+e.getMessage());
+        }
+    }
+
     @RequestMapping("/deleteUser")
     @ResponseBody
     public ResultObject deleteUser(HttpServletRequest request){
