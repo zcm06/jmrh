@@ -69,8 +69,8 @@ public class ItemController {
     @ResponseBody
     public ResultObject deleteItem(HttpServletRequest request) {
         try {
-            Long id = Long.parseLong(request.getParameter("id"));
-            itemService.deleteById(id);
+            String id = request.getParameter("id");
+            itemService.deleteById(Long.parseLong(id));
             return ResultUtil.successfulResultMap("删除成功！");
         } catch (Exception e) {
             e.printStackTrace();
