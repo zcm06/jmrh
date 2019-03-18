@@ -70,7 +70,7 @@ public class UserController {
     @ResponseBody
     public ResultObject queryUsers(@RequestBody UserVo userVo,HttpServletRequest request){
         try {
-            PageRequest pageRequest = PageRequest.of(userVo.getPage(),userVo.getSize());
+            PageRequest pageRequest = PageRequest.of(userVo.getPage()-1,userVo.getSize());
             User user = new User();
             BeanUtils.copyProperties(userVo,user);
             return ResultUtil.successfulResultMap(userService.queryUsers(user,pageRequest));
