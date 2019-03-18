@@ -16,4 +16,6 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item,Long> {
 
     public List<Item> queryItemsByIdInOrderByFieldName(List<Long> ids);
+
+    public Item queryItemsById(Long id);
 }

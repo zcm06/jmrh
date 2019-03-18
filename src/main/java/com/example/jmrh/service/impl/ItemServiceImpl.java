@@ -28,7 +28,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItemById(Long id)throws Exception {
-        return itemRepository.getOne(id);
+        return itemRepository.queryItemsById(id);
     }
 
     @Override
