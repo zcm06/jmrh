@@ -13,4 +13,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface UserReposity extends JpaRepository<User,Long>, JpaSpecificationExecutor<User> {
 
     public User queryUserByUserName(String userName);
+
+    public User queryUserById(Long id);
 }

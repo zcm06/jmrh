@@ -69,4 +69,10 @@ public class UserServiceImpl implements UserService {
 
         return userReposity.findAll(specification,pageable);
     }
+
+    @Override
+    public User queryUserById(Long id) throws Exception {
+        return userReposity.queryUserById(id);
+    }
+
 }

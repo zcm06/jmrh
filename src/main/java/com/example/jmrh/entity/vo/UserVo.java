@@ -19,5 +19,12 @@ public class UserVo extends User {
     @Setter
     List<RoleVo> roleVos = new ArrayList<>();
 
+    @Getter
+    @Setter
+    private int page;
+
+    @Getter
+    @Setter
+    private int size;
 
 }
