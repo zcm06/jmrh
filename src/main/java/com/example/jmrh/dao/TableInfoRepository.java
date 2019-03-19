@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface TableInfoRepository extends JpaRepository<TableInfo,Long>, JpaSpecificationExecutor<TableInfo> {
 
     public TableInfo queryTableInfoById(Long id);
+
+    public int countByCity(String city);
 }

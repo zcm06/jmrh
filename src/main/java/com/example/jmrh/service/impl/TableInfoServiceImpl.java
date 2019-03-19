@@ -80,6 +80,10 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(tableInfoIds)){
                     list.add(cb.in(root.get("id")).value(tableInfoIds));
                 }
+                if (!ObjectUtils.isEmpty(vo.getCreateUserId())){
+                    list.add(cb.equal(root.get("createUserId"),vo.getCreateUserId()));
+                }
+
                 if (!ObjectUtils.isEmpty(vo.getUnitNature())){
                     list.add(cb.like(root.get("unitNature"),"%"+vo.getUnitNature()+"%"));
                 }
@@ -132,6 +136,11 @@ public class TableInfoServiceImpl implements TableInfoService {
 
 
        return tableInfoRepository.findAll(specification,pageable);
+    }
+
+    @Override
+    public int countByCity(String city) throws Exception {
+        return tableInfoRepository.countByCity(city);
     }
 
 

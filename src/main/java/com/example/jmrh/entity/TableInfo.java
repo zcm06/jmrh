@@ -154,4 +154,8 @@ public class TableInfo {
     @Column(name = "unit_overview")
     private String unitOverview;
 
+    @Getter
+    @Setter
+    private String city;
+
 }

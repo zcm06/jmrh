@@ -9,6 +9,6 @@ package com.example.jmrh.utils;
 public class CommonUtil {
 
     public enum Area{
-        南昌,九江,萍乡,景德镇,新余,鹰潭,赣州,吉安,宜春,抚州,上饶;
+        南昌市,九江市,萍乡市,景德镇市,新余市,鹰潭市,赣州市,吉安市,宜春市,抚州市,上饶市;
     }
 }

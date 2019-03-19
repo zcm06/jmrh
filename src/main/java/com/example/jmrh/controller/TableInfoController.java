@@ -2,6 +2,7 @@ package com.example.jmrh.controller;
 
 import com.example.jmrh.entity.*;
 import com.example.jmrh.entity.vo.TableInfoVo;
+import com.example.jmrh.entity.vo.UserVo;
 import com.example.jmrh.service.AddressService;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
@@ -61,6 +62,7 @@ public class TableInfoController {
             Field[] fields = infoClass.getDeclaredFields();
             copyValue(tableInfo, map, fields);
             tableInfo.setCreateUserId(UserUtil.getUser(request).getId());
+            tableInfo.setCity(UserUtil.getUser(request).getCity());
             tableInfo.setCreateTime(new Date());
             tableInfo = tableInfoService.save(tableInfo);
 
@@ -231,6 +233,21 @@ public class TableInfoController {
             Page<TableInfo> infos = tableInfoService.queryTableInfosByVo(vo, pageable, tableInfoIds);
             return ResultUtil.successfulResultMap(infos);
         } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failResultMap("查询失败！" + e.getMessage());
+        }
+    }
+
+    @RequestMapping("/queryTableInfosByUser")
+    @ResponseBody
+    public ResultObject queryTableInfosByUser(@RequestBody TableInfoVo vo,HttpServletRequest request){
+        try {
+            User user = UserUtil.getUser(request);
+            vo.setCreateUserId(user.getId());
+            Pageable pageable = PageRequest.of(vo.getPage()-1, vo.getSize());
+            Page<TableInfo> infos = tableInfoService.queryTableInfosByVo(vo, pageable, null);
+            return ResultUtil.successfulResultMap(infos);
+        }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.failResultMap("查询失败！" + e.getMessage());
         }
