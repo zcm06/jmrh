@@ -100,7 +100,7 @@ public class TableInfoController {
             field.setAccessible(true);
             Object value = map.get(field.getName());
             if (field.getType().getName().equals("java.util.Date")){
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-HH-dd");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = simpleDateFormat.parse(""+value);
                 value = date;
             }
