@@ -8,7 +8,6 @@ import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.UserUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,8 +54,7 @@ public class TableInfoController {
 
             List<Map<String, Object>> itemList = (List<Map<String, Object>>) map.get("itemList");
             List<Map<String, Object>> addressList = (List<Map<String, Object>>) map.get("addressList");
-            map.remove("itemList");
-            map.remove("addressList");
+            clearNotUseValue(map);//清除无效的值
             TableInfo tableInfo = new TableInfo();
 
             Class infoClass = tableInfo.getClass();
@@ -74,13 +72,14 @@ public class TableInfoController {
                 tableInfoItem = new TableInfoItem();
                 String name = ObjectUtils.nullSafeToString(itemMap.get("name"));
                 Field field = infoClass.getDeclaredField(name);
-                List<Long> list = (List<Long>) itemMap.get("ids");
+                field.setAccessible(true);
+                List<Integer> list = (List<Integer>) itemMap.get("ids");
                 itemBuilder = new StringBuilder();
-                for (Long id : list) {
-                    item = itemService.getItemById(id);
+                for (Integer id : list) {
+                    item = itemService.getItemById(id.longValue());
                     itemBuilder.append(item.getItemName()+",");
                     tableInfoItem.setTableInfoId(tableInfo.getId());
-                    tableInfoItem.setItemId(id);
+                    tableInfoItem.setItemId(id.longValue());
                     tableInfoItemList.add(tableInfoItem);
                 }
                 itemBuilder.replace(itemBuilder.length()-1,itemBuilder.length(),"");
@@ -97,7 +96,7 @@ public class TableInfoController {
             for (Map<String, Object> addressMap : addressList) {
                 address = new Address();
                 sb = new StringBuilder();
-                BeanUtils.copyProperties(addressMap, address);
+                loadAddressValue(addressMap,address);
                 address.setTableInfoId(tableInfo.getId());
                 list.add(address);
                 sb.append(address.getCity());
@@ -122,19 +121,46 @@ public class TableInfoController {
         }
     }
 
+    private void loadAddressValue(Map<String, Object> addressMap, Address address) {
+
+        address.setCity(ObjectUtils.nullSafeToString(addressMap.get("city")));
+        address.setDistrict(ObjectUtils.nullSafeToString(addressMap.get("district")));
+        address.setTown(ObjectUtils.nullSafeToString(addressMap.get("town")));
+        address.setDetail(ObjectUtils.nullSafeToString(addressMap.get("detail")));
+        address.setFieldName(ObjectUtils.nullSafeToString(addressMap.get("fieldName")));
+
+    }
+
     private void copyValue(TableInfo tableInfo, Map<String, Object> map, Field[] fields) throws Exception {
+
         for (Field field : fields) {
             field.setAccessible(true);
             Object value = map.get(field.getName());
-            if (field.getType().getName().equals("java.util.Date")) {
+            if (field.getName().equals("unitCreateTime")) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
             }
+            if (field.getType().getName().equals("double")){
+                value =  Double.parseDouble(value+"");
+            }else if (field.getType().getName().equals("int")){
+                value =  Integer.parseInt(value+"");
+            }
             field.set(tableInfo, value);
         }
+    }
 
-
+    private void clearNotUseValue(Map<String, Object> map) {
+        map.remove("registeredAddress");
+        map.remove("researchProductionAddress");
+        map.remove("contactAddress");
+        map.remove("listing");
+        map.remove("capitalComponent");
+        map.remove("unitCategory");
+        map.remove("industryCategory");
+        map.remove("militarySalary");
+        map.remove("itemList");
+        map.remove("addressList");
     }
 
     @RequestMapping("/queryTableInfo/{id}")
