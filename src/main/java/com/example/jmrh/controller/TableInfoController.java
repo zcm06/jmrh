@@ -72,17 +72,21 @@ public class TableInfoController {
             StringBuilder itemBuilder = null;
             Item item = null;
             for (Map<String, Object> itemMap : itemList) {
+                Set<Long> ids = new HashSet<>();
                 tableInfoItem = new TableInfoItem();
                 String name = ObjectUtils.nullSafeToString(itemMap.get("name"));
                 Field field = infoClass.getDeclaredField(name);
                 field.setAccessible(true);
                 List<Integer> list = (List<Integer>) itemMap.get("ids");
+                for (Integer id : list){
+                    ids.add(id.longValue());
+                }
                 itemBuilder = new StringBuilder();
-                for (Integer id : list) {
-                    item = itemService.getItemById(id.longValue());
+                for (Long id : ids) {
+                    item = itemService.getItemById(id);
                     itemBuilder.append(item.getItemName()+",");
                     tableInfoItem.setTableInfoId(tableInfo.getId());
-                    tableInfoItem.setItemId(id.longValue());
+                    tableInfoItem.setItemId(id);
                     tableInfoItemList.add(tableInfoItem);
                 }
                 itemBuilder.replace(itemBuilder.length()-1,itemBuilder.length(),"");
