@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -215,17 +216,18 @@ public class TableInfoController {
             List<Address> addressList= vo.getAddressList();
 
             if (!ObjectUtils.isEmpty(addressList)){
-                Class clazz = vo.getClass();
+                Class clazz = vo.getClass().getSuperclass();
                 Field field = null;
+                Field[] fields= clazz.getDeclaredFields();
                 StringBuilder sb= null;
                 for (Address address:addressList){
                     field = clazz.getDeclaredField(address.getFieldName());
                     field.setAccessible(true);
                     sb = new StringBuilder();
-                    sb.append(address.getCity());
-                    sb.append(address.getDistrict());
-                    sb.append(address.getCity());
-                    field.set(vo,sb.toString());
+                    sb.append(StringUtils.isEmpty(address.getCity())?"":address.getCity());
+                    sb.append(StringUtils.isEmpty(address.getDistrict())?"":address.getDistrict());
+                    sb.append(StringUtils.isEmpty(address.getTown())?"":address.getTown());
+                    field.set(vo,StringUtils.isEmpty(sb.toString())?null:sb.toString());
                 }
             }
 
