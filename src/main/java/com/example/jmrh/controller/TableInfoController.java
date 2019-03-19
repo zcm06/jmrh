@@ -78,19 +78,19 @@ public class TableInfoController {
                 Field field = infoClass.getDeclaredField(name);
                 field.setAccessible(true);
                 List<Integer> list = (List<Integer>) itemMap.get("ids");
-                for (Integer id : list){
+                for (Integer id : list) {
                     ids.add(id.longValue());
                 }
                 itemBuilder = new StringBuilder();
                 for (Long id : ids) {
                     item = itemService.getItemById(id);
-                    itemBuilder.append(item.getItemName()+",");
+                    itemBuilder.append(item.getItemName() + ",");
                     tableInfoItem.setTableInfoId(tableInfo.getId());
                     tableInfoItem.setItemId(id);
                     tableInfoItemList.add(tableInfoItem);
                 }
-                itemBuilder.replace(itemBuilder.length()-1,itemBuilder.length(),"");
-                field.set(tableInfo,itemBuilder.toString());
+                itemBuilder.replace(itemBuilder.length() - 1, itemBuilder.length(), "");
+                field.set(tableInfo, itemBuilder.toString());
             }
 
             tableInfoItemService.deleteTableInfoItemsByTableInfoId(tableInfo.getId());//先删除
@@ -103,7 +103,7 @@ public class TableInfoController {
             for (Map<String, Object> addressMap : addressList) {
                 address = new Address();
                 sb = new StringBuilder();
-                loadAddressValue(addressMap,address);
+                loadAddressValue(addressMap, address);
                 address.setTableInfoId(tableInfo.getId());
                 list.add(address);
                 sb.append(address.getCity());
@@ -143,15 +143,18 @@ public class TableInfoController {
         for (Field field : fields) {
             field.setAccessible(true);
             Object value = map.get(field.getName());
-            if (field.getName().equals("unitCreateTime")) {
+            if (field.getName().toLowerCase().contains("time")) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
             }
-            if (field.getType().getName().equals("java.lang.Double")){
-                value =  Double.parseDouble(value+"");
-            }else if (field.getType().getName().equals("java.lang.Integer")){
-                value =  Integer.parseInt(value+"");
+            if (field.getName().toLowerCase().contains("id")) {
+                value = Long.parseLong(value + "");
+            }
+            if (field.getType().getName().equals("java.lang.Double")) {
+                value = Double.parseDouble(value + "");
+            } else if (field.getType().getName().equals("java.lang.Integer")) {
+                value = Integer.parseInt(value + "");
             }
             field.set(tableInfo, value);
         }
@@ -190,7 +193,7 @@ public class TableInfoController {
             }
             Address address = new Address();
             address.setTableInfoId(id);
-            List<Address> addressList= addressService.findAll(address);
+            List<Address> addressList = addressService.findAll(address);
             Map<String, Object> map = new HashMap<>();
             map.put("tableInfo", tableInfo);
             map.put("itemIds", itemIds);
@@ -217,25 +220,25 @@ public class TableInfoController {
                 }
             }
 
-            List<Address> addressList= vo.getAddressList();
+            List<Address> addressList = vo.getAddressList();
 
-            if (!ObjectUtils.isEmpty(addressList)){
+            if (!ObjectUtils.isEmpty(addressList)) {
                 Class clazz = vo.getClass().getSuperclass();
                 Field field = null;
-                Field[] fields= clazz.getDeclaredFields();
-                StringBuilder sb= null;
-                for (Address address:addressList){
+                Field[] fields = clazz.getDeclaredFields();
+                StringBuilder sb = null;
+                for (Address address : addressList) {
                     field = clazz.getDeclaredField(address.getFieldName());
                     field.setAccessible(true);
                     sb = new StringBuilder();
-                    sb.append(StringUtils.isEmpty(address.getCity())?"":address.getCity());
-                    sb.append(StringUtils.isEmpty(address.getDistrict())?"":address.getDistrict());
-                    sb.append(StringUtils.isEmpty(address.getTown())?"":address.getTown());
-                    field.set(vo,StringUtils.isEmpty(sb.toString())?null:sb.toString());
+                    sb.append(StringUtils.isEmpty(address.getCity()) ? "" : address.getCity());
+                    sb.append(StringUtils.isEmpty(address.getDistrict()) ? "" : address.getDistrict());
+                    sb.append(StringUtils.isEmpty(address.getTown()) ? "" : address.getTown());
+                    field.set(vo, StringUtils.isEmpty(sb.toString()) ? null : sb.toString());
                 }
             }
 
-            Pageable pageable = PageRequest.of(vo.getPage()-1, vo.getSize());
+            Pageable pageable = PageRequest.of(vo.getPage() - 1, vo.getSize());
             Page<TableInfo> infos = tableInfoService.queryTableInfosByVo(vo, pageable, tableInfoIds);
             return ResultUtil.successfulResultMap(infos);
         } catch (Exception e) {
@@ -246,14 +249,14 @@ public class TableInfoController {
 
     @RequestMapping("/queryTableInfosByUser")
     @ResponseBody
-    public ResultObject queryTableInfosByUser(@RequestBody TableInfoVo vo,HttpServletRequest request){
+    public ResultObject queryTableInfosByUser(@RequestBody TableInfoVo vo, HttpServletRequest request) {
         try {
             User user = UserUtil.getUser(request);
             vo.setCreateUserId(user.getId());
-            Pageable pageable = PageRequest.of(vo.getPage()-1, vo.getSize());
+            Pageable pageable = PageRequest.of(vo.getPage() - 1, vo.getSize());
             Page<TableInfo> infos = tableInfoService.queryTableInfosByVo(vo, pageable, null);
             return ResultUtil.successfulResultMap(infos);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.failResultMap("查询失败！" + e.getMessage());
         }
@@ -261,12 +264,12 @@ public class TableInfoController {
 
     @RequestMapping("/deleteTableInfo")
     @ResponseBody
-    public ResultObject queryTableInfosByUser(HttpServletRequest request){
+    public ResultObject queryTableInfosByUser(HttpServletRequest request) {
         try {
             String id = request.getParameter("id");
             tableInfoService.deleteById(Long.parseLong(id));
             return ResultUtil.successfulResultMap("删除成功！");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResultUtil.failResultMap("删除失败！" + e.getMessage());
         }
