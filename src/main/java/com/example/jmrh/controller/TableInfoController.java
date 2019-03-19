@@ -197,7 +197,7 @@ public class TableInfoController {
 
     @RequestMapping("/queryTableInfoList")
     @ResponseBody
-    public ResultObject queryTableInfoList(TableInfoVo vo, HttpServletRequest request) {
+    public ResultObject queryTableInfoList(@RequestBody TableInfoVo vo, HttpServletRequest request) {
         try {
             List<Long> tableInfoIds = null;
             if (!ObjectUtils.isEmpty(vo.getItemIds())) {
@@ -210,7 +210,24 @@ public class TableInfoController {
                 }
             }
 
-            Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
+            List<Address> addressList= vo.getAddressList();
+
+            if (!ObjectUtils.isEmpty(addressList)){
+                Class clazz = vo.getClass();
+                Field field = null;
+                StringBuilder sb= null;
+                for (Address address:addressList){
+                    field = clazz.getDeclaredField(address.getFieldName());
+                    field.setAccessible(true);
+                    sb = new StringBuilder();
+                    sb.append(address.getCity());
+                    sb.append(address.getDistrict());
+                    sb.append(address.getCity());
+                    field.set(vo,sb.toString());
+                }
+            }
+
+            Pageable pageable = PageRequest.of(vo.getPage()-1, vo.getSize());
             Page<TableInfo> infos = tableInfoService.queryTableInfosByVo(vo, pageable, tableInfoIds);
             return ResultUtil.successfulResultMap(infos);
         } catch (Exception e) {

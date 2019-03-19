@@ -116,15 +116,15 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(vo.getHightechEnterprises())){
                     list.add(cb.equal(root.get("hightechEnterprises"),vo.getHightechEnterprises()));
                 }
-//                if (!ObjectUtils.isEmpty(vo.getRegisteredAddress())){
-//                    list.add(cb.like(root.get("registeredAddress"),"%"+vo.getRegisteredAddress()+"%"));
-//                }
-//                if (!ObjectUtils.isEmpty(vo.getResearchProductionAddress())){
-//                    list.add(cb.like(root.get("researchProductionAddress"),"%"+vo.getResearchProductionAddress()+"%"));
-//                }
-//                if (!ObjectUtils.isEmpty(vo.getContactAddress())){
-//                    list.add(cb.like(root.get("contactAddress"),"%"+vo.getContactAddress()+"%"));
-//                }
+                if (!ObjectUtils.isEmpty(vo.getRegisteredAddress())){
+                    list.add(cb.like(root.get("registeredAddress"),"%"+vo.getRegisteredAddress()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getResearchProductionAddress())){
+                    list.add(cb.like(root.get("researchProductionAddress"),"%"+vo.getResearchProductionAddress()+"%"));
+                }
+                if (!ObjectUtils.isEmpty(vo.getContactAddress())){
+                    list.add(cb.like(root.get("contactAddress"),"%"+vo.getContactAddress()+"%"));
+                }
                 return cb.and(list.toArray(new Predicate[list.size()]));
             }
         };

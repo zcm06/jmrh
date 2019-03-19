@@ -48,49 +48,49 @@ public class TableInfoVo extends TableInfo {
 
     @Getter
     @Setter
-    private double startRegisteredCapital;
+    private Double startRegisteredCapital;
 
     @Getter
     @Setter
-    private double endRegisteredCapital;
+    private Double endRegisteredCapital;
 
     @Getter
     @Setter
-    private double startFixedTotalAssets;
+    private Double startFixedTotalAssets;
 
     @Getter
     @Setter
-    private double endFixedTotalAssets;
+    private Double endFixedTotalAssets;
 
     @Getter
     @Setter
-    private double startAnnualMainBusinessIncome;
+    private Double startAnnualMainBusinessIncome;
 
     @Getter
     @Setter
-    private double endAnnualMainBusinessIncome;
+    private Double endAnnualMainBusinessIncome;
 
     @Getter
     @Setter
-    private double startAnnualRdInvestment;
+    private Double startAnnualRdInvestment;
 
     @Getter
     @Setter
-    private double endAnnualRdInvestment;
+    private Double endAnnualRdInvestment;
 
     @Getter
     @Setter
-    private int startTotalPeople;
+    private Integer startTotalPeople;
 
     @Getter
     @Setter
-    private int endTotalPeople;
+    private Integer endTotalPeople;
 
     @Getter
     @Setter
-    private int startDevelopersNumber;
+    private Integer startDevelopersNumber;
 
     @Getter
     @Setter
-    private int endDevelopersNumber;
+    private Integer endDevelopersNumber;
 }
