@@ -44,9 +44,6 @@ public class TableInfoServiceImpl implements TableInfoService {
     @Autowired
     private TableInfoItemService tableInfoItemService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Autowired
     private ItemService itemService;
 
