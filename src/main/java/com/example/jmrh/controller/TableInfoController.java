@@ -69,6 +69,7 @@ public class TableInfoController {
             List<TableInfoItem> tableInfoItemList = new ArrayList<TableInfoItem>();
             TableInfoItem tableInfoItem = null;
             StringBuilder itemBuilder = null;
+            Item item = null;
             for (Map<String, Object> itemMap : itemList) {
                 tableInfoItem = new TableInfoItem();
                 String name = ObjectUtils.nullSafeToString(itemMap.get("name"));
@@ -76,7 +77,7 @@ public class TableInfoController {
                 List<Long> list = (List<Long>) itemMap.get("ids");
                 itemBuilder = new StringBuilder();
                 for (Long id : list) {
-                    Item item = itemService.getItemById(id);
+                    item = itemService.getItemById(id);
                     itemBuilder.append(item.getItemName()+",");
                     tableInfoItem.setTableInfoId(tableInfo.getId());
                     tableInfoItem.setItemId(id);
@@ -154,9 +155,13 @@ public class TableInfoController {
             for (TableInfoItem tableInfoItem : tableInfoItems) {
                 itemIds.add(tableInfoItem.getItemId());
             }
+            Address address = new Address();
+            address.setTableInfoId(id);
+            List<Address> addressList= addressService.findAll(address);
             Map<String, Object> map = new HashMap<>();
             map.put("tableInfo", tableInfo);
             map.put("itemIds", itemIds);
+            map.put("addressList", addressList);
             return ResultUtil.successfulResultMap(map);
         } catch (Exception e) {
             e.printStackTrace();
