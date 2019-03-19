@@ -19,4 +19,6 @@ public interface TableInfoService {
     public Page<TableInfo> queryTableInfosByVo(TableInfoVo vo, Pageable pageable,List<Long> tableInfoIds) throws Exception;
 
     public int countByCity(String city)throws Exception;
+
+    public void deleteById(Long id)throws Exception;
 }

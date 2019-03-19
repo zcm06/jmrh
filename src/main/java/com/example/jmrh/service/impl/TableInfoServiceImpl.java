@@ -143,5 +143,10 @@ public class TableInfoServiceImpl implements TableInfoService {
         return tableInfoRepository.countByCity(city);
     }
 
+    @Override
+    public void deleteById(Long id) throws Exception {
+        tableInfoRepository.deleteById(id);
+    }
+
 
 }

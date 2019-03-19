@@ -148,9 +148,9 @@ public class TableInfoController {
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
             }
-            if (field.getType().getName().equals("double")){
+            if (field.getType().getName().equals("java.lang.Double")){
                 value =  Double.parseDouble(value+"");
-            }else if (field.getType().getName().equals("int")){
+            }else if (field.getType().getName().equals("java.lang.Integer")){
                 value =  Integer.parseInt(value+"");
             }
             field.set(tableInfo, value);
@@ -256,6 +256,19 @@ public class TableInfoController {
         }catch (Exception e){
             e.printStackTrace();
             return ResultUtil.failResultMap("查询失败！" + e.getMessage());
+        }
+    }
+
+    @RequestMapping("/deleteTableInfo")
+    @ResponseBody
+    public ResultObject queryTableInfosByUser(HttpServletRequest request){
+        try {
+            String id = request.getParameter("id");
+            tableInfoService.deleteById(Long.parseLong(id));
+            return ResultUtil.successfulResultMap("删除成功！");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("删除失败！" + e.getMessage());
         }
     }
 
