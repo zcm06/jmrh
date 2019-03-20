@@ -72,13 +72,14 @@ public class TableInfoController {
             StringBuilder itemBuilder = null;
             Item item = null;
             for (Map<String, Object> itemMap : itemList) {
-                tableInfoItem = new TableInfoItem();
+
                 String name = ObjectUtils.nullSafeToString(itemMap.get("name"));
                 Field field = infoClass.getDeclaredField(name);
                 field.setAccessible(true);
                 List<Integer> list = (List<Integer>) itemMap.get("ids");
                 itemBuilder = new StringBuilder();
                 for (Integer id : list) {
+                    tableInfoItem = new TableInfoItem();
                     item = itemService.getItemById(id.longValue());
                     itemBuilder.append(item.getItemName() + ",");
                     tableInfoItem.setTableInfoId(tableInfo.getId());
