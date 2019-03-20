@@ -22,6 +22,7 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
     private TableInfoItemRepository tableInfoItemRepository;
 
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void batchSave(List<TableInfoItem> tableInfoItemList)throws Exception {
 
@@ -30,6 +31,7 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public TableInfoItem save(TableInfoItem tableInfoItem)throws Exception {
 

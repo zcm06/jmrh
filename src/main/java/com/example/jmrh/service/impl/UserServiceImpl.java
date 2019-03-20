@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
         return userReposity.save(user);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteUserById(Long id) throws Exception {
         userReposity.deleteById(id);

@@ -5,6 +5,7 @@ import com.example.jmrh.entity.Item;
 import com.example.jmrh.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Item save(Item item) throws Exception{
 
@@ -41,6 +43,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAll();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Long id) throws Exception {
         itemRepository.deleteById(id);

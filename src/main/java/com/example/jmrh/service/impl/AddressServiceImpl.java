@@ -22,12 +22,14 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Address save(Address address) throws Exception {
 
         return addressRepository.save(address);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void batchSave(List<Address> list) throws Exception {
         addressRepository.saveAll(list);
@@ -38,6 +40,7 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.findAll(Example.of(address));
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(Long id) throws Exception {
         addressRepository.deleteById(id);

@@ -5,6 +5,7 @@ import com.example.jmrh.entity.Role;
 import com.example.jmrh.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,11 +26,13 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.queryRolesByIdIn(roleIds);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Role save(Role role) throws Exception {
         return roleRepository.save(role);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Long id) throws Exception {
         roleRepository.deleteById(id);

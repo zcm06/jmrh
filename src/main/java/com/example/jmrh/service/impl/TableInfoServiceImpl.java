@@ -41,6 +41,7 @@ public class TableInfoServiceImpl implements TableInfoService {
     @Autowired
     private ItemService itemService;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public TableInfo save(TableInfo tableInfo, List<TableInfoItem> tableInfoItemList) throws Exception {
 
@@ -48,6 +49,7 @@ public class TableInfoServiceImpl implements TableInfoService {
         return tableInfo;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public TableInfo save(TableInfo tableInfo) throws Exception {
         return tableInfoRepository.save(tableInfo);
