@@ -22,5 +22,5 @@ public interface TableInfoItemRepository extends JpaRepository<TableInfoItem,Lon
 
     public List<TableInfoItem> queryTableInfoItemsByItemIdIn(List<Long> itemIds);
 
-    public void deleteTableInfoItemsByTableInfoId(Long tableInfoId);
+    public void deleteByTableInfoId(Long tableInfoId);
 }

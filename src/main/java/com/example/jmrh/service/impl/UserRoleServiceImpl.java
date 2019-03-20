@@ -5,6 +5,7 @@ import com.example.jmrh.entity.UserRole;
 import com.example.jmrh.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         return userRoleRepository.queryUserRolesByRoleId(roleId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteByUserId(Long userId) throws Exception {
         userRoleRepository.deleteByUserId(userId);

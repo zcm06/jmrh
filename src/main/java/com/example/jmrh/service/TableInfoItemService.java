@@ -1,6 +1,7 @@
 package com.example.jmrh.service;
 
 import com.example.jmrh.entity.TableInfoItem;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

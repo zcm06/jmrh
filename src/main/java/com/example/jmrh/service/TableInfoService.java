@@ -5,6 +5,7 @@ import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.entity.vo.TableInfoVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

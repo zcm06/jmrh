@@ -1,11 +1,11 @@
 package com.example.jmrh.service.impl;
 
 import com.example.jmrh.dao.TableInfoItemRepository;
-import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.service.TableInfoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,8 +47,9 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
         return tableInfoItemRepository.queryTableInfoItemsByItemIdIn(itemIds);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteTableInfoItemsByTableInfoId(Long tableInfoId) throws Exception {
-        tableInfoItemRepository.deleteTableInfoItemsByTableInfoId(tableInfoId);
+        tableInfoItemRepository.deleteByTableInfoId(tableInfoId);
     }
 }

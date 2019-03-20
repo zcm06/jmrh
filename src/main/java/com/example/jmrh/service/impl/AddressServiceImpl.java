@@ -6,6 +6,7 @@ import com.example.jmrh.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class AddressServiceImpl implements AddressService {
         addressRepository.deleteById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteByTableInfoId(Long tableInfoId)throws Exception{
         addressRepository.deleteAddressesByTableInfoId(tableInfoId);

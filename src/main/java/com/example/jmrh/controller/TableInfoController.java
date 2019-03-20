@@ -62,8 +62,8 @@ public class TableInfoController {
             Class infoClass = tableInfo.getClass();
             Field[] fields = infoClass.getDeclaredFields();
             copyValue(tableInfo, map, fields);
-            tableInfo.setCreateUserId(UserUtil.getUser(request).getId());
-            tableInfo.setCity(UserUtil.getUser(request).getCity());
+//            tableInfo.setCreateUserId(UserUtil.getUser(request).getId());
+//            tableInfo.setCity(UserUtil.getUser(request).getCity());
             tableInfo.setCreateTime(new Date());
             tableInfo = tableInfoService.save(tableInfo);
 

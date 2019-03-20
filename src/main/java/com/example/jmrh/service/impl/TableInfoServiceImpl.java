@@ -1,33 +1,27 @@
 package com.example.jmrh.service.impl;
 
-import com.example.jmrh.dao.TableInfoItemRepository;
 import com.example.jmrh.dao.TableInfoRepository;
-import com.example.jmrh.entity.Address;
-import com.example.jmrh.entity.Item;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.entity.vo.TableInfoVo;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: jmrh
@@ -143,6 +137,7 @@ public class TableInfoServiceImpl implements TableInfoService {
         return tableInfoRepository.countByCity(city);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteById(Long id) throws Exception {
         tableInfoRepository.deleteById(id);
