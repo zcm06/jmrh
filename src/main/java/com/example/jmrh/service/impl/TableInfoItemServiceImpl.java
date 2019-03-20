@@ -26,9 +26,10 @@ public class TableInfoItemServiceImpl implements TableInfoItemService {
     @Override
     public void batchSave(List<TableInfoItem> tableInfoItemList)throws Exception {
 
-        for(TableInfoItem tableInfoItem:tableInfoItemList){
-            tableInfoItemRepository.save(tableInfoItem);
-        }
+        tableInfoItemRepository.saveAll(tableInfoItemList);
+//        for(TableInfoItem tableInfoItem:tableInfoItemList){
+//            tableInfoItemRepository.save(tableInfoItem);
+//        }
     }
 
     @Transactional(rollbackFor = Exception.class)
