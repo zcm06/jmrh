@@ -143,12 +143,15 @@ public class TableInfoController {
         for (Field field : fields) {
             field.setAccessible(true);
             Object value = map.get(field.getName());
+            if(ObjectUtils.isEmpty(value)){
+                continue;
+            }
             if (field.getName().toLowerCase().contains("time")) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
             }
-            if (field.getName().toLowerCase().contains("id")) {
+            if (field.getName().equals("createUserId") || field.getName().equals("id")) {
                 value = Long.parseLong(value + "");
             }
             if (field.getType().getName().equals("java.lang.Double")) {
