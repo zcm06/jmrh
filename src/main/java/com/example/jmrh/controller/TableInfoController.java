@@ -142,7 +142,12 @@ public class TableInfoController {
             if(ObjectUtils.isEmpty(value)){
                 continue;
             }
-            if (field.getName().toLowerCase().contains("time")) {
+            if (field.getName().equals("createTime")) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = simpleDateFormat.parse("" + value);
+                value = date;
+            }
+            if (field.getName().equals("unitCreateTime")) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
