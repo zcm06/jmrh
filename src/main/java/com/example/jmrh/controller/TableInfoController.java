@@ -2,7 +2,6 @@ package com.example.jmrh.controller;
 
 import com.example.jmrh.entity.*;
 import com.example.jmrh.entity.vo.TableInfoVo;
-import com.example.jmrh.entity.vo.UserVo;
 import com.example.jmrh.service.AddressService;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
@@ -144,7 +143,7 @@ public class TableInfoController {
                 continue;
             }
             if (field.getName().toLowerCase().contains("time")) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
             }
