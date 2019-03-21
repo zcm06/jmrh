@@ -22,7 +22,7 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/loginController/**","/commonController/**");
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/loginController/**","/commonController/getPublicKey");
 
     }
 
