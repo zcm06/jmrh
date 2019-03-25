@@ -71,6 +71,8 @@ public class RoleController {
                 rolePermission.setPermissionId(id.longValue());
                 rolePermissions.add(rolePermission);
             }
+            rolePermissionService.deleteByRoleId(roleId.longValue());
+            rolePermissionService.saveRolePermissions(rolePermissions);
             return ResultUtil.successfulResultMap("");
 
         }catch (Exception e){
