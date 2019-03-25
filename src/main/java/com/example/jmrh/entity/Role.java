@@ -23,5 +23,6 @@ public class Role {
 
     @Getter
     @Setter
+    @Column(name = "role_name")
     private String name;
 }
