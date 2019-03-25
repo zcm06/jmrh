@@ -38,9 +38,8 @@ public class User {
     @Column(name = "city")
     private String city;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Getter
     @Setter
     @Column(name = "last_login_time")
-    private Date lastLoginTime;
+    private String lastLoginTime;
 }

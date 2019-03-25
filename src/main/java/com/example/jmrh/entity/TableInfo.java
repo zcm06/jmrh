@@ -57,7 +57,7 @@ public class TableInfo {
     @Getter
     @Setter
     @Column(name = "unit_create_time")
-    private Date unitCreateTime;
+    private String unitCreateTime;
 
     @Getter
     @Setter

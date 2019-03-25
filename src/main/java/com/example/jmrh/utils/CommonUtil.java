@@ -1,5 +1,7 @@
 package com.example.jmrh.utils;
 
+import java.util.Map;
+
 /**
  * @program: jmrh
  * @description:
@@ -11,4 +13,6 @@ public class CommonUtil {
     public enum Area{
         南昌市,九江市,萍乡市,景德镇市,新余市,鹰潭市,赣州市,吉安市,宜春市,抚州市,上饶市;
     }
+
+
 }

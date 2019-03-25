@@ -108,7 +108,7 @@ public class UserController {
             BeanUtils.copyProperties(userVo,user);
             return ResultUtil.successfulResultMap(userService.queryUsers(user,pageRequest));
         }catch (Exception e){
-            return ResultUtil.successfulResultMap("删除失败!");
+            return ResultUtil.successfulResultMap("查询失败!");
         }
     }
 

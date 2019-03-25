@@ -61,7 +61,7 @@ public class LoginController {
                 throw new Exception("用户名或密码错误！");
             }
 
-            user1.setLastLoginTime(Calendar.getInstance(Locale.CHINA).getTime());
+//            user1.setLastLoginTime(Calendar.getInstance(Locale.CHINA).getTime());
             userService.save(user1);//更新登录时间
             user1.setPassword("");
             UserVo userVo = setRole(user1);
