@@ -18,6 +18,7 @@ public class Permission {
     @Id
     @Getter
     @Setter
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -31,7 +32,8 @@ public class Permission {
 
     @Getter
     @Setter
-    private int order;
+    @Column(name = "order_num")
+    private int orderNum;
 
     @Getter
     @Setter
