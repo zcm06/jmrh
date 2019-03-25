@@ -42,4 +42,9 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> findAll() throws Exception {
         return roleRepository.findAll();
     }
+
+    @Override
+    public Role queryRoleById(Long id) throws Exception {
+        return roleRepository.queryRoleById(id);
+    }
 }

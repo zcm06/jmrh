@@ -20,4 +20,6 @@ public interface RoleService {
     public void deleteById(Long id)throws Exception;
 
     public List<Role> findAll()throws Exception;
+
+    public Role queryRoleById(Long id)throws Exception;
 }
