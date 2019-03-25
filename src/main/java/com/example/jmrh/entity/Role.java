@@ -25,4 +25,8 @@ public class Role {
     @Setter
     @Column(name = "role_name")
     private String name;
+
+    @Getter
+    @Setter
+    private String remark;
 }
