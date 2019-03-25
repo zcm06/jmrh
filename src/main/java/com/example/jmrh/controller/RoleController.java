@@ -157,7 +157,7 @@ public class RoleController {
     @ResponseBody
     public ResultObject savePermission(@RequestBody Permission permission,HttpServletRequest request){
         try {
-            if (permission.getParentId().equals(-1)){
+            if (permission.getParentId().intValue() == -1){
                 permission.setPermissionLevel(1);
                 permission.setParentId(null);
             }else{
