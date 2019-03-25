@@ -159,6 +159,7 @@ public class RoleController {
         try {
             if (permission.getParentId().equals(-1)){
                 permission.setPermissionLevel(1);
+                permission.setParentId(null);
             }else{
                 Long parentId = permission.getParentId();
                 Permission parent = permissionService.queryPermissionById(parentId);
