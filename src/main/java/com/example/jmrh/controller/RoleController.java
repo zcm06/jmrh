@@ -93,6 +93,19 @@ public class RoleController {
         }
     }
 
+    @RequestMapping("/queryPermissionById")
+    @ResponseBody
+    public ResultObject queryPermissionById(HttpServletRequest request){
+        try {
+            String permissionId = request.getParameter("id");
+            Long id = Long.parseLong(permissionId);
+            return ResultUtil.successfulResultMap(permissionService.queryPermissionById(id));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("删除失败！");
+        }
+    }
+
     @RequestMapping("/queryRoles")
     @ResponseBody
     public ResultObject queryRoles(HttpServletRequest request){
