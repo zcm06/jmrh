@@ -28,6 +28,7 @@ import java.util.*;
  * @create: 2019-03-25 22:41
  **/
 @Controller
+@RequestMapping("/roleController")
 public class RoleController {
 
     @Autowired

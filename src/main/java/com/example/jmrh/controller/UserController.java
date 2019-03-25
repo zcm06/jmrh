@@ -39,10 +39,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRoleService userRoleService;
-
-
     @RequestMapping("/saveUser")
     @ResponseBody
     public ResultObject addUser(@RequestBody User user, HttpServletRequest request){
