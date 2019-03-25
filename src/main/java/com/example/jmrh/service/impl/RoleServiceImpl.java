@@ -37,4 +37,9 @@ public class RoleServiceImpl implements RoleService {
     public void deleteById(Long id) throws Exception {
         roleRepository.deleteById(id);
     }
+
+    @Override
+    public List<Role> findAll() throws Exception {
+        return roleRepository.findAll();
+    }
 }

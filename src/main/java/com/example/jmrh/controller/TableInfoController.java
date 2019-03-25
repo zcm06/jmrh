@@ -147,11 +147,11 @@ public class TableInfoController {
                 Date date = simpleDateFormat.parse("" + value);
                 value = date;
             }
-            if (field.getName().equals("unitCreateTime")) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                Date date = simpleDateFormat.parse("" + value);
-                value = date;
-            }
+//            if (field.getName().equals("unitCreateTime")) {
+//                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+//                Date date = simpleDateFormat.parse("" + value);
+//                value = date;
+//            }
             if (field.getName().equals("createUserId") || field.getName().equals("id")) {
                 value = Long.parseLong(value + "");
             }

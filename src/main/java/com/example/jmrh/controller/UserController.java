@@ -1,21 +1,29 @@
 package com.example.jmrh.controller;
 
+import com.example.jmrh.entity.Permission;
 import com.example.jmrh.entity.ResultObject;
 import com.example.jmrh.entity.User;
+import com.example.jmrh.entity.UserRole;
+import com.example.jmrh.entity.vo.RoleVo;
 import com.example.jmrh.entity.vo.UserVo;
+import com.example.jmrh.service.PermissionService;
+import com.example.jmrh.service.UserRoleService;
 import com.example.jmrh.service.UserService;
 import com.example.jmrh.utils.Md5Util;
 import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.RsaUtil;
+import com.example.jmrh.utils.UserUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @program: jmrh
@@ -30,6 +38,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
 
     @RequestMapping("/saveUser")
     @ResponseBody
@@ -122,4 +134,6 @@ public class UserController {
             return ResultUtil.successfulResultMap("删除失败!");
         }
     }
+
+
 }

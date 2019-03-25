@@ -42,4 +42,9 @@ public class Permission {
     @Setter
     @Column(name = "permission_level")
     private int permissionLevel;
+
+    @Getter
+    @Setter
+    @Column(name = "icon_name")
+    private String iconName;
 }

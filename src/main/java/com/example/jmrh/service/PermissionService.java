@@ -11,4 +11,8 @@ public interface PermissionService {
     public Permission queryPermissionById(Long id)throws Exception;
 
     public void deleteById(Long id)throws Exception;
+
+    public Permission save(Permission permission)throws Exception;
+
+    public List<Permission> findAll()throws Exception;
 }
