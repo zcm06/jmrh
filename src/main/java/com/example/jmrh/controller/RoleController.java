@@ -83,7 +83,7 @@ public class RoleController {
     @ResponseBody
     public ResultObject deleteRoleById(HttpServletRequest request){
         try {
-            String roleId = request.getParameter("roleId");
+            String roleId = request.getParameter("id");
             Long id = Long.parseLong(roleId);
             roleService.deleteById(id);
             return ResultUtil.successfulResultMap("删除成功！");
@@ -109,7 +109,7 @@ public class RoleController {
     @ResponseBody
     public ResultObject queryPermissionsByRoleId(HttpServletRequest request){
         try {
-            String roleId = request.getParameter("roleId");
+            String roleId = request.getParameter("id");
             Long id = Long.parseLong(roleId);
             List<RolePermission> rolePermissions = rolePermissionService.queryRolePermissionsByRoleId(id);
             List<Long> ids = new ArrayList<>();
@@ -163,7 +163,7 @@ public class RoleController {
     @ResponseBody
     public ResultObject deletePermissionById(HttpServletRequest request){
         try {
-            String roleId = request.getParameter("permissionId");
+            String roleId = request.getParameter("id");
             Long id = Long.parseLong(roleId);
             permissionService.deleteById(id);
             return ResultUtil.successfulResultMap("删除成功！");
