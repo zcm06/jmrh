@@ -282,15 +282,13 @@ public class RoleController {
     @ResponseBody
     public ResultObject setRole(@RequestBody UserRole userRole, HttpServletRequest request){
         try {
-            String id = request.getParameter("id");
-            Long roleId = Long.parseLong(id);
             List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userRole.getUserId());
             if (ObjectUtils.isEmpty(userRoles)){
                 userRole = new UserRole();
                 userRole.setUserId(userRole.getUserId());
-                userRole.setRoleId(roleId);
+                userRole.setRoleId(userRole.getRoleId());
             }else{
-                userRole.setRoleId(roleId);
+                userRole.setRoleId(userRole.getRoleId());
             }
             userRoleService.save(userRole);
             return ResultUtil.successfulResultMap("设置成功！");
