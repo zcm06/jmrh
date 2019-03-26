@@ -288,6 +288,7 @@ public class RoleController {
                 userRole.setUserId(userRole.getUserId());
                 userRole.setRoleId(userRole.getRoleId());
             }else{
+                userRole = userRoles.get(0);
                 userRole.setRoleId(userRole.getRoleId());
             }
             userRoleService.save(userRole);
