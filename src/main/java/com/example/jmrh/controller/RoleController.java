@@ -283,11 +283,7 @@ public class RoleController {
     public ResultObject setRole(@RequestBody UserRole userRole, HttpServletRequest request){
         try {
             List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userRole.getUserId());
-            if (ObjectUtils.isEmpty(userRoles)){
-                userRole = new UserRole();
-                userRole.setUserId(userRole.getUserId());
-                userRole.setRoleId(userRole.getRoleId());
-            }else{
+            if (!ObjectUtils.isEmpty(userRoles)){
                 userRole = userRoles.get(0);
                 userRole.setRoleId(userRole.getRoleId());
             }
