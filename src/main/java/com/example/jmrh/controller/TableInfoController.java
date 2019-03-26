@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -315,7 +316,7 @@ public class TableInfoController {
     public void exportTableData(List<String> fields, List<Long> ids, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         List<String> captions = new ArrayList<>();
-
+        List<String> fields2 = new ArrayList<>();
 
         for (TableField anEnum : TableField.values()) {
             if (!ObjectUtils.isEmpty(fields)) {
@@ -325,10 +326,14 @@ public class TableInfoController {
                     }
                 }
             } else {
-                fields = new ArrayList<>();
+//                fields = new ArrayList<>();
                 captions.add(anEnum.getValue());
-                fields.add(anEnum.name().toString());
+                fields2.add(anEnum.name().toString());
             }
+        }
+
+        if (ObjectUtils.isEmpty(fields)){
+            fields = fields2;
         }
 
         List<TableInfo> tableInfos = null;
@@ -372,7 +377,7 @@ public class TableInfoController {
         }
         response.setContentType("multipart/form-data");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename="+filePath);
+        response.setHeader("Content-disposition", "attachment;filename="+ URLEncoder.encode(filePath,"UTF-8"));
         workbook.write(outputStream);
         outputStream.flush();
 
