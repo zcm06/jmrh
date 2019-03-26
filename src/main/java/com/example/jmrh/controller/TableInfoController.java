@@ -297,14 +297,18 @@ public class TableInfoController {
             JSONObject jsonObject = JSON.parseObject(data);
             Object obj = jsonObject.get("fields");
             Object obj2 = jsonObject.get("ids");
-            List<Long> ids = null;
+            List<Long> ids = new ArrayList<>();
             List<String> fields = null;
             if (!ObjectUtils.isEmpty(obj)){
                 fields = (List<String>) obj;
             }
 
             if (!ObjectUtils.isEmpty(obj2)){
-                ids = (List<Long>) obj2;
+
+                List<Integer> list = (List<Integer>) obj2;
+                for (Integer integer:list){
+                    ids.add(integer.longValue());
+                }
             }
             exportTableData(fields,ids,request,response);
         }catch (Exception e){
