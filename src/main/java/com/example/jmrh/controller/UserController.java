@@ -157,7 +157,7 @@ public class UserController {
             Long userId = Long.parseLong(id);
             List<UserRole> userRoles= userRoleService.queryUserRolesByUserId(userId);
             Map<String,Object> map = new HashMap<>();
-            map.put("roleId",ObjectUtils.isEmpty(map)?null:userRoles.get(0).getRoleId());
+            map.put("roleId",ObjectUtils.isEmpty(userRoles)?null:userRoles.get(0).getRoleId());
 
             return ResultUtil.successfulResultMap(map);
         }catch (Exception e){
