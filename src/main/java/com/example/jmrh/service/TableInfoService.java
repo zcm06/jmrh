@@ -22,4 +22,8 @@ public interface TableInfoService {
     public int countByCity(String city)throws Exception;
 
     public void deleteById(Long id)throws Exception;
+
+    public List<TableInfo> findAll()throws Exception;
+
+    public List<TableInfo> queryTableInfosByIds(List<Long> ids)throws Exception;
 }

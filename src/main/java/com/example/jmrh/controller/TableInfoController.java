@@ -7,7 +7,12 @@ import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
 import com.example.jmrh.utils.ResultUtil;
+import com.example.jmrh.utils.TableField;
 import com.example.jmrh.utils.UserUtil;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -139,7 +148,7 @@ public class TableInfoController {
         for (Field field : fields) {
             field.setAccessible(true);
             Object value = map.get(field.getName());
-            if(ObjectUtils.isEmpty(value)){
+            if (ObjectUtils.isEmpty(value)) {
                 continue;
             }
             if (field.getName().equals("createTime")) {
@@ -277,6 +286,95 @@ public class TableInfoController {
             e.printStackTrace();
             return ResultUtil.failResultMap("删除失败！" + e.getMessage());
         }
+    }
+
+    @RequestMapping("/exportData")
+    @ResponseBody
+    public void exportData(@RequestBody Map<String,Object> map,HttpServletRequest request, HttpServletResponse response){
+
+        try {
+            Object obj = map.get("fields");
+            Object obj2 = map.get("ids");
+            List<Long> ids = null;
+            List<String> fields = null;
+            if (!ObjectUtils.isEmpty(obj)){
+                fields = (List<String>) obj;
+            }
+
+            if (!ObjectUtils.isEmpty(obj2)){
+                ids = (List<Long>) obj2;
+            }
+            exportTableData(fields,ids,request,response);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void exportTableData(List<String> fields, List<Long> ids, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        List<String> captions = new ArrayList<>();
+
+
+        for (TableField anEnum : TableField.values()) {
+            if (!ObjectUtils.isEmpty(fields)) {
+                for (String field : fields) {
+                    if (anEnum.getValue().equals(field)) {
+                        captions.add(anEnum.name().toString());
+                    }
+                }
+            } else {
+                fields = new ArrayList<>();
+                captions.add(anEnum.getValue());
+                fields.add(anEnum.name().toString());
+            }
+        }
+
+        List<TableInfo> tableInfos = null;
+
+        if (ObjectUtils.isEmpty(ids)) {
+            tableInfos = tableInfoService.findAll();
+        } else {
+            tableInfos = tableInfoService.queryTableInfosByIds(ids);
+        }
+
+        String filePath = "军民融合产业企业情况表.xlsx";
+
+        OutputStream outputStream = response.getOutputStream();
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet();
+        Row row = sheet.createRow(0);
+
+        for (int i = 0; i < captions.size(); i++) {
+            String value = captions.get(i);
+            Cell cell = row.createCell(i);
+            cell.setCellValue(value);
+        }
+
+        for (int i = 0; i < tableInfos.size(); i++) {
+            Row sheetRow = sheet.createRow(i + 1);
+
+            TableInfo tableInfo = tableInfos.get(i);
+            Field[] declaredFields = tableInfo.getClass().getDeclaredFields();
+
+            for (int j = 0; j < fields.size(); j++) {
+                Cell rowCell = sheetRow.createCell(j);
+
+                for (Field field : declaredFields) {
+                    field.setAccessible(true);
+                    if (field.getName().equals(fields.get(j))) {
+                        rowCell.setCellValue(ObjectUtils.nullSafeToString(field.get(tableInfo)));
+                    }
+                }
+            }
+        }
+        response.setContentType("multipart/form-data");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename="+filePath);
+        workbook.write(outputStream);
+        outputStream.flush();
+
     }
 
 }

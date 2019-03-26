@@ -7,7 +7,14 @@ import com.example.jmrh.entity.vo.TableInfoVo;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
+import com.example.jmrh.utils.TableField;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,8 +27,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @program: jmrh
@@ -145,5 +157,15 @@ public class TableInfoServiceImpl implements TableInfoService {
         tableInfoRepository.deleteById(id);
     }
 
+
+    @Override
+    public List<TableInfo> findAll() throws Exception {
+        return tableInfoRepository.findAll();
+    }
+
+    @Override
+    public List<TableInfo> queryTableInfosByIds(List<Long> ids) throws Exception {
+        return tableInfoRepository.queryTableInfosByIdIn(ids);
+    }
 
 }
