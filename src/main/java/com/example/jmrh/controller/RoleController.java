@@ -280,16 +280,14 @@ public class RoleController {
 
     @RequestMapping("/setRole")
     @ResponseBody
-    public ResultObject setRole(HttpServletRequest request){
+    public ResultObject setRole(@RequestBody UserRole userRole, HttpServletRequest request){
         try {
             String id = request.getParameter("id");
             Long roleId = Long.parseLong(id);
-            Long userId = UserUtil.getUser(request).getId();
-            List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userId);
-            UserRole userRole = null;
+            List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userRole.getUserId());
             if (ObjectUtils.isEmpty(userRoles)){
                 userRole = new UserRole();
-                userRole.setUserId(userId);
+                userRole.setUserId(userRole.getUserId());
                 userRole.setRoleId(roleId);
             }else{
                 userRole.setRoleId(roleId);

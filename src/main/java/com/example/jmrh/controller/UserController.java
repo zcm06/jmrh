@@ -39,22 +39,36 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
     @RequestMapping("/saveUser")
     @ResponseBody
-    public ResultObject addUser(@RequestBody User user, HttpServletRequest request){
+    public ResultObject addUser(@RequestBody UserVo userVo, HttpServletRequest request){
         try {
-            String userName = user.getUserName();
+            String userName = userVo.getUserName();
             User user1 = userService.queryUserByUserName(userName);
-            if (user1 != null && !user1.getId().equals(user.getId())) {
+            if (user1 != null && !user1.getId().equals(userVo.getId())) {
                 throw new Exception("用户名已存在！");
             }
-            String password = user.getPassword();
+            String password = userVo.getPassword();
             password = password.replace("%2B", "+");
             String privateKey = RsaUtil.getKeymMap().get("privateKey");
             String decodePassword = RsaUtil.decode(password, privateKey);
             String md5Password = Md5Util.md5(decodePassword);
-            user.setPassword(md5Password);
-            userService.save(user);
+            userVo.setPassword(md5Password);
+
+            User user  = new User();
+            BeanUtils.copyProperties(userVo,user);
+
+            user = userService.save(user);
+
+            UserRole userRole = new UserRole();
+
+            userRole.setRoleId(userVo.getRoleId());
+            userRole.setUserId(user.getId());
+            userRoleService.save(userRole);
+
             return ResultUtil.successfulResultMap("保存成功!");
         }catch (Exception e){
             e.printStackTrace();

@@ -27,4 +27,8 @@ public class UserVo extends User {
     @Setter
     private int size;
 
+    @Getter
+    @Setter
+    private Long roleId;
+
 }
