@@ -1,5 +1,7 @@
 package com.example.jmrh.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.jmrh.entity.*;
 import com.example.jmrh.entity.vo.TableInfoVo;
 import com.example.jmrh.service.AddressService;
@@ -20,10 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -290,11 +289,13 @@ public class TableInfoController {
 
     @RequestMapping("/exportData")
     @ResponseBody
-    public void exportData(@RequestBody Map<String,Object> map,HttpServletRequest request, HttpServletResponse response){
+    public void exportData(@RequestParam("data") String data, HttpServletRequest request, HttpServletResponse response){
 
         try {
-            Object obj = map.get("fields");
-            Object obj2 = map.get("ids");
+
+            JSONObject jsonObject = JSON.parseObject(data);
+            Object obj = jsonObject.get("fields");
+            Object obj2 = jsonObject.get("ids");
             List<Long> ids = null;
             List<String> fields = null;
             if (!ObjectUtils.isEmpty(obj)){
