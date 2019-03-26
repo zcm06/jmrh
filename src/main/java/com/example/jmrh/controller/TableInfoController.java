@@ -321,8 +321,8 @@ public class TableInfoController {
         for (TableField anEnum : TableField.values()) {
             if (!ObjectUtils.isEmpty(fields)) {
                 for (String field : fields) {
-                    if (anEnum.getValue().equals(field)) {
-                        captions.add(anEnum.name().toString());
+                    if (anEnum.name().equals(field)) {
+                        captions.add(anEnum.getValue());
                     }
                 }
             } else {
