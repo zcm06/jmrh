@@ -277,4 +277,28 @@ public class RoleController {
         }
         return itemVoList;
     }
+
+    @RequestMapping("/setRole")
+    @ResponseBody
+    public ResultObject setRole(HttpServletRequest request){
+        try {
+            String id = request.getParameter("id");
+            Long roleId = Long.parseLong(id);
+            Long userId = UserUtil.getUser(request).getId();
+            List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userId);
+            UserRole userRole = null;
+            if (ObjectUtils.isEmpty(userRoles)){
+                userRole = new UserRole();
+                userRole.setUserId(userId);
+                userRole.setRoleId(roleId);
+            }else{
+                userRole.setRoleId(roleId);
+            }
+            userRoleService.save(userRole);
+            return ResultUtil.successfulResultMap("设置成功！");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.failResultMap("设置失败！");
+        }
+    }
 }

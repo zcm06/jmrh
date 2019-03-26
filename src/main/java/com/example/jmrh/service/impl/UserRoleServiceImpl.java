@@ -36,4 +36,15 @@ public class UserRoleServiceImpl implements UserRoleService {
     public void deleteByUserId(Long userId) throws Exception {
         userRoleRepository.deleteByUserId(userId);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public UserRole save(UserRole userRole) throws Exception {
+        return userRoleRepository.save(userRole);
+    }
+
+    @Override
+    public UserRole queryUserRoleByUserIdAndRoleId(Long userId, Long roleId) throws Exception {
+        return userRoleRepository.queryUserRoleByUserIdAndRoleId(userId,roleId);
+    }
 }
