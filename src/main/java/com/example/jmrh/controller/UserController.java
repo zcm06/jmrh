@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: jmrh
@@ -141,9 +143,26 @@ public class UserController {
             String id = request.getParameter("id");
             return ResultUtil.successfulResultMap(userService.queryUserById(Long.parseLong(id)));
         }catch (Exception e){
+            e.printStackTrace();
             return ResultUtil.successfulResultMap("删除失败!");
         }
     }
 
 
+    @RequestMapping("/queryRoleIdByUserId")
+    @ResponseBody
+    public ResultObject queryRoleIdByUserId(HttpServletRequest request){
+        try {
+            String id = request.getParameter("id");
+            Long userId = Long.parseLong(id);
+            List<UserRole> userRoles= userRoleService.queryUserRolesByUserId(userId);
+            Map<String,Object> map = new HashMap<>();
+            map.put("roleId",ObjectUtils.isEmpty(map)?null:userRoles.get(0).getRoleId());
+
+            return ResultUtil.successfulResultMap(map);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.successfulResultMap("查询失败!");
+        }
+    }
 }
