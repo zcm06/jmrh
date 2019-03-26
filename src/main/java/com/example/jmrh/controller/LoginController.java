@@ -66,7 +66,7 @@ public class LoginController {
             user1.setPassword("");
             UserVo userVo = setRole(user1);
             UserUtil.setUser(userVo, request);
-            return ResultUtil.successfulResultMap("登录成功！");
+            return ResultUtil.successfulResultMap("登录成功！"+request.getSession().getId());
 
         } catch (Exception e) {
             e.printStackTrace();
