@@ -20,4 +20,7 @@ public class Admin {
     @Getter
     private static final String roleName = "超级管理员";
 
+    @Getter
+    private static final Long id = Integer.valueOf(Integer.MAX_VALUE/10).longValue();
+
 }
