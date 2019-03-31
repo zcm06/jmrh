@@ -98,9 +98,16 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(vo.getLegalRepresentative())){
                     list.add(cb.like(root.get("legalRepresentative"),"%"+vo.getLegalRepresentative()+"%"));
                 }
-                if (!ObjectUtils.isEmpty(vo.getStartUnitCreateTime()) && !ObjectUtils.isEmpty(vo.getEndUnitCreateTime())){
-                    list.add(cb.between(root.get("unitCreateTime"),vo.getStartUnitCreateTime(),vo.getEndUnitCreateTime()));
+                if(!ObjectUtils.isEmpty(vo.getStartUnitCreateTime())){
+                    list.add(cb.greaterThanOrEqualTo(root.get("unitCreateTime"),vo.getStartUnitCreateTime()));
                 }
+                if(!ObjectUtils.isEmpty(vo.getEndUnitCreateTime())){
+                    list.add(cb.lessThanOrEqualTo(root.get("unitCreateTime"),vo.getEndUnitCreateTime()));
+                }
+
+//                if (!ObjectUtils.isEmpty(vo.getStartUnitCreateTime()) && !ObjectUtils.isEmpty(vo.getStartUnitCreateTime())){
+//                    list.add(cb.between(root.get("unitCreateTime"),vo.getStartUnitCreateTime(),vo.getEndUnitCreateTime()));
+//                }
                 if(!ObjectUtils.isEmpty(vo.getStartAnnualMainBusinessIncome())){
                     list.add(cb.greaterThanOrEqualTo(root.get("annualMainBusinessIncome"),vo.getStartAnnualMainBusinessIncome()));
                 }
@@ -137,11 +144,25 @@ public class TableInfoServiceImpl implements TableInfoService {
 //                if (!ObjectUtils.isEmpty(vo.getStartAnnualRdInvestment()) && !ObjectUtils.isEmpty(vo.getEndAnnualRdInvestment())){
 //                    list.add(cb.between(root.get("annualRdInvestment"),vo.getStartAnnualRdInvestment(),vo.getEndAnnualRdInvestment()));
 //                }
-                if (!ObjectUtils.isEmpty(vo.getStartTotalPeople()) && !ObjectUtils.isEmpty(vo.getEndTotalPeople())){
-                    list.add(cb.between(root.get("totalPeople"),vo.getStartTotalPeople(),vo.getEndTotalPeople()));
+//                if (!ObjectUtils.isEmpty(vo.getStartTotalPeople()) && !ObjectUtils.isEmpty(vo.getEndTotalPeople())){
+//                    list.add(cb.between(root.get("totalPeople"),vo.getStartTotalPeople(),vo.getEndTotalPeople()));
+//                }
+                if(!ObjectUtils.isEmpty(vo.getStartTotalPeople())){
+                    list.add(cb.greaterThanOrEqualTo(root.get("totalPeople"),vo.getStartTotalPeople()));
                 }
-                if (!ObjectUtils.isEmpty(vo.getStartDevelopersNumber()) && !ObjectUtils.isEmpty(vo.getEndDevelopersNumber())){
-                    list.add(cb.between(root.get("developersNumber"),vo.getStartDevelopersNumber(),vo.getEndDevelopersNumber()));
+                if(!ObjectUtils.isEmpty(vo.getEndTotalPeople())){
+                    list.add(cb.lessThanOrEqualTo(root.get("totalPeople"),vo.getEndTotalPeople()));
+                }
+
+//                if (!ObjectUtils.isEmpty(vo.getStartDevelopersNumber()) && !ObjectUtils.isEmpty(vo.getEndDevelopersNumber())){
+//                    list.add(cb.between(root.get("developersNumber"),vo.getStartDevelopersNumber(),vo.getEndDevelopersNumber()));
+//                }
+
+                if(!ObjectUtils.isEmpty(vo.getStartDevelopersNumber())){
+                    list.add(cb.greaterThanOrEqualTo(root.get("developersNumber"),vo.getStartDevelopersNumber()));
+                }
+                if(!ObjectUtils.isEmpty(vo.getEndDevelopersNumber())){
+                    list.add(cb.lessThanOrEqualTo(root.get("developersNumber"),vo.getEndDevelopersNumber()));
                 }
                 if (!ObjectUtils.isEmpty(vo.getBusinessScope())){
                     list.add(cb.like(root.get("businessScope"),"%"+vo.getBusinessScope()+"%"));
