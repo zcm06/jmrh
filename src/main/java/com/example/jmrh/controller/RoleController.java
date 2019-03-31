@@ -287,11 +287,12 @@ public class RoleController {
     public ResultObject setRole(@RequestBody UserRole userRole, HttpServletRequest request){
         try {
             List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userRole.getUserId());
+            UserRole userRole2 = null;
             if (!ObjectUtils.isEmpty(userRoles)){
-                userRole = userRoles.get(0);
-                userRole.setRoleId(userRole.getRoleId());
+                userRole2 = userRoles.get(0);
+                userRole2.setRoleId(userRole.getRoleId());
             }
-            userRoleService.save(userRole);
+            userRoleService.save(userRole2);
             return ResultUtil.successfulResultMap("设置成功！");
         }catch (Exception e){
             e.printStackTrace();
