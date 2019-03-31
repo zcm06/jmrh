@@ -161,6 +161,9 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(vo.getContactAddress())){
                     list.add(cb.like(root.get("contactAddress"),"%"+vo.getContactAddress()+"%"));
                 }
+                if (!ObjectUtils.isEmpty(vo.getCity())){
+                    list.add(cb.equal(root.get("city"),vo.getCity()));
+                }
                 return cb.and(list.toArray(new Predicate[list.size()]));
             }
         };
