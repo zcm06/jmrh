@@ -49,6 +49,10 @@ public class RoleController {
     @ResponseBody
     public ResultObject saveRole(@RequestBody Role role, HttpServletRequest request){
         try {
+            Role role1 = roleService.queryRoleByRoleName(role.getName());
+            if (ObjectUtils.isEmpty(role1)){
+                throw new Exception("已存在该角色！");
+            }
             role = roleService.save(role);
             return ResultUtil.successfulResultMap(role);
         }catch (Exception e){

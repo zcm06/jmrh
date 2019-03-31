@@ -22,4 +22,6 @@ public interface RoleService {
     public List<Role> findAll()throws Exception;
 
     public Role queryRoleById(Long id)throws Exception;
+
+    public Role queryRoleByRoleName(String roleName)throws Exception;
 }

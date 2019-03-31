@@ -47,4 +47,9 @@ public class RoleServiceImpl implements RoleService {
     public Role queryRoleById(Long id) throws Exception {
         return roleRepository.queryRoleById(id);
     }
+
+    @Override
+    public Role queryRoleByRoleName(String roleName) throws Exception {
+        return roleRepository.queryRoleByName(roleName);
+    }
 }

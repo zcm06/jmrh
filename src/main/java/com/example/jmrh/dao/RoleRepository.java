@@ -18,4 +18,6 @@ public interface RoleRepository extends JpaRepository<Role,Long> {
     public List<Role> queryRolesByIdIn(List<Long> roleIds);
 
     public Role queryRoleById(Long id);
+
+    public Role queryRoleByName(String roleName);
 }
