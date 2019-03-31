@@ -69,7 +69,7 @@ public class LoginController {
             user1.setPassword("");
             UserVo userVo = setRole(user1);
             UserUtil.setUser(userVo, request);
-            return ResultUtil.successfulResultMap(userVo.getId());
+            return ResultUtil.successfulResultMap(userVo);
 
         } catch (Exception e) {
             e.printStackTrace();
