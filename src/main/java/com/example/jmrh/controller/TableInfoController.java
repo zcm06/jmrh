@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.jmrh.entity.*;
 import com.example.jmrh.entity.vo.TableInfoVo;
-import com.example.jmrh.service.AddressService;
-import com.example.jmrh.service.ItemService;
-import com.example.jmrh.service.TableInfoItemService;
-import com.example.jmrh.service.TableInfoService;
+import com.example.jmrh.entity.vo.UserVo;
+import com.example.jmrh.service.*;
 import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.TableField;
 import com.example.jmrh.utils.UserUtil;
@@ -56,6 +54,12 @@ public class TableInfoController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @RequestMapping("/saveTableInfo")
     @ResponseBody
@@ -222,6 +226,21 @@ public class TableInfoController {
     @ResponseBody
     public ResultObject queryTableInfoList(@RequestBody TableInfoVo vo, HttpServletRequest request) {
         try {
+
+
+            String city = vo.getCity();
+            UserVo userVo = UserUtil.getUser(request);
+            List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userVo.getId());
+            if (ObjectUtils.isEmpty(userRoles)){
+                throw new Exception("暂无权限查看!");
+            }
+            UserRole userRole = userRoles.get(0);
+            Role role = roleService.queryRoleById(userRole.getRoleId());
+
+            if (!role.getName().contains("管理员")){
+                vo.setCity(userVo.getCity());
+            }
+
             List<Long> tableInfoIds = null;
             if (!ObjectUtils.isEmpty(vo.getItemIds())) {
                 List<TableInfoItem> tableInfoItems = tableInfoItemService.queryTableInfoItemsByItemsId(vo.getItemIds());
