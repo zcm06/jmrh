@@ -52,12 +52,14 @@ public class UserServiceAspect {
         if ( !ObjectUtils.isEmpty(user) && Admin.getName().equals(user.getUserName())){
             throw new Exception("不允许删除超级管理员！");
         }
+
     }
 
     @Before("filterUpdateUser()")
     public void updateBefore(JoinPoint joinPoint) throws Exception {
         Object[] args= joinPoint.getArgs();
         User user =(User) args[0];
+        user = userService.queryUserById(user.getId());
         if (Admin.getName().equals(user.getUserName())){
             throw new Exception("不允许修改超级管理员！");
         }
@@ -67,6 +69,7 @@ public class UserServiceAspect {
     public void updatePasswordBefore(JoinPoint joinPoint) throws Exception {
         Object[] args= joinPoint.getArgs();
         User user =(User) args[0];
+        user = userService.queryUserById(user.getId());
         if (Admin.getName().equals(user.getUserName())){
             throw new Exception("不允许修改超级管理员！");
         }
