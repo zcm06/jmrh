@@ -101,18 +101,42 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(vo.getStartUnitCreateTime()) && !ObjectUtils.isEmpty(vo.getEndUnitCreateTime())){
                     list.add(cb.between(root.get("unitCreateTime"),vo.getStartUnitCreateTime(),vo.getEndUnitCreateTime()));
                 }
-                if (!ObjectUtils.isEmpty(vo.getStartAnnualMainBusinessIncome()) && !ObjectUtils.isEmpty(vo.getEndAnnualMainBusinessIncome())){
-                    list.add(cb.between(root.get("annualMainBusinessIncome"),vo.getStartAnnualMainBusinessIncome(),vo.getEndAnnualMainBusinessIncome()));
+                if(!ObjectUtils.isEmpty(vo.getStartAnnualMainBusinessIncome())){
+                    list.add(cb.greaterThan(root.get("annualMainBusinessIncome"),vo.getStartAnnualMainBusinessIncome()));
                 }
-                if (!ObjectUtils.isEmpty(vo.getStartRegisteredCapital()) && !ObjectUtils.isEmpty(vo.getEndRegisteredCapital())){
-                    list.add(cb.between(root.get("registeredCapital"),vo.getStartRegisteredCapital(),vo.getEndRegisteredCapital()));
+                if(!ObjectUtils.isEmpty(vo.getEndAnnualMainBusinessIncome())){
+                    list.add(cb.lessThan(root.get("annualMainBusinessIncome"),vo.getEndAnnualMainBusinessIncome()));
                 }
-                if (!ObjectUtils.isEmpty(vo.getStartFixedTotalAssets()) && !ObjectUtils.isEmpty(vo.getEndFixedTotalAssets())){
-                    list.add(cb.between(root.get("fixedTotalAssets"),vo.getStartFixedTotalAssets(),vo.getEndFixedTotalAssets()));
+//                if (!ObjectUtils.isEmpty(vo.getStartAnnualMainBusinessIncome()) && !ObjectUtils.isEmpty(vo.getEndAnnualMainBusinessIncome())){
+//                    list.add(cb.between(root.get("annualMainBusinessIncome"),vo.getStartAnnualMainBusinessIncome(),vo.getEndAnnualMainBusinessIncome()));
+//                }
+                if(!ObjectUtils.isEmpty(vo.getStartRegisteredCapital())){
+                    list.add(cb.greaterThan(root.get("registeredCapital"),vo.getStartRegisteredCapital()));
                 }
-                if (!ObjectUtils.isEmpty(vo.getStartAnnualRdInvestment()) && !ObjectUtils.isEmpty(vo.getEndAnnualRdInvestment())){
-                    list.add(cb.between(root.get("annualRdInvestment"),vo.getStartAnnualRdInvestment(),vo.getEndAnnualRdInvestment()));
+                if(!ObjectUtils.isEmpty(vo.getEndRegisteredCapital())){
+                    list.add(cb.lessThan(root.get("registeredCapital"),vo.getEndRegisteredCapital()));
                 }
+//                if (!ObjectUtils.isEmpty(vo.getStartRegisteredCapital()) && !ObjectUtils.isEmpty(vo.getEndRegisteredCapital())){
+//                    list.add(cb.between(root.get("registeredCapital"),vo.getStartRegisteredCapital(),vo.getEndRegisteredCapital()));
+//                }
+                if(!ObjectUtils.isEmpty(vo.getStartFixedTotalAssets())){
+                    list.add(cb.greaterThan(root.get("fixedTotalAssets"),vo.getStartFixedTotalAssets()));
+                }
+                if(!ObjectUtils.isEmpty(vo.getEndFixedTotalAssets())){
+                    list.add(cb.lessThan(root.get("fixedTotalAssets"),vo.getEndFixedTotalAssets()));
+                }
+//                if (!ObjectUtils.isEmpty(vo.getStartFixedTotalAssets()) && !ObjectUtils.isEmpty(vo.getEndFixedTotalAssets())){
+//                    list.add(cb.between(root.get("fixedTotalAssets"),vo.getStartFixedTotalAssets(),vo.getEndFixedTotalAssets()));
+//                }
+                if(!ObjectUtils.isEmpty(vo.getStartAnnualRdInvestment())){
+                    list.add(cb.greaterThan(root.get("annualRdInvestment"),vo.getStartAnnualRdInvestment()));
+                }
+                if(!ObjectUtils.isEmpty(vo.getEndAnnualRdInvestment())){
+                    list.add(cb.lessThan(root.get("annualRdInvestment"),vo.getEndAnnualRdInvestment()));
+                }
+//                if (!ObjectUtils.isEmpty(vo.getStartAnnualRdInvestment()) && !ObjectUtils.isEmpty(vo.getEndAnnualRdInvestment())){
+//                    list.add(cb.between(root.get("annualRdInvestment"),vo.getStartAnnualRdInvestment(),vo.getEndAnnualRdInvestment()));
+//                }
                 if (!ObjectUtils.isEmpty(vo.getStartTotalPeople()) && !ObjectUtils.isEmpty(vo.getEndTotalPeople())){
                     list.add(cb.between(root.get("totalPeople"),vo.getStartTotalPeople(),vo.getEndTotalPeople()));
                 }
