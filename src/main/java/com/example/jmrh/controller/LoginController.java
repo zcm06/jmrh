@@ -63,7 +63,7 @@ public class LoginController {
             }
 
             Date date = Calendar.getInstance(Locale.CHINA).getTime();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             user1.setLastLoginTime(simpleDateFormat.format(date));
             userService.save(user1);//更新登录时间
             user1.setPassword("");
