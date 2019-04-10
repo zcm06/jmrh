@@ -68,6 +68,7 @@ public class TableInfoController {
 
             List<Map<String, Object>> itemList = (List<Map<String, Object>>) map.get("itemList");
             List<Map<String, Object>> addressList = (List<Map<String, Object>>) map.get("addressList");
+            Address registeredAddress = (Address)map.get("registeredAddress");
             clearNotUseValue(map);//清除无效的值
             TableInfo tableInfo = new TableInfo();
 
@@ -75,10 +76,11 @@ public class TableInfoController {
             Field[] fields = infoClass.getDeclaredFields();
             copyValue(tableInfo, map, fields);
             tableInfo.setCreateUserId(UserUtil.getUser(request).getId());
-            tableInfo.setCity(UserUtil.getUser(request).getCity());
+            tableInfo.setCity(registeredAddress.getCity());
+            tableInfo.setDistrict(registeredAddress.getDistrict());
+//            tableInfo.setCity(UserUtil.getUser(request).getCity());
             tableInfo.setCreateTime(new Date());
             tableInfo = tableInfoService.save(tableInfo);
-
             List<TableInfoItem> tableInfoItemList = new ArrayList<TableInfoItem>();
             TableInfoItem tableInfoItem = null;
             StringBuilder itemBuilder = null;
@@ -229,16 +231,20 @@ public class TableInfoController {
 
 
             String city = vo.getCity();
+            String district= vo.getDistrict();
             UserVo userVo = UserUtil.getUser(request);
             List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userVo.getId());
-            if (ObjectUtils.isEmpty(userRoles)){
+            if (ObjectUtils.isEmpty(userRoles)) {
                 throw new Exception("暂无权限查看!");
             }
             UserRole userRole = userRoles.get(0);
             Role role = roleService.queryRoleById(userRole.getRoleId());
 
-            if (!role.getName().contains("管理员")){
-                vo.setCity(userVo.getCity());
+            if (!role.getName().contains("管理员")) {
+//                vo.setCity(userVo.getCity());
+                if(!userVo.getCity().equals(city)){
+                    throw new Exception("暂无权限查看!");
+                }
             }
 
             List<Long> tableInfoIds = null;
@@ -309,7 +315,7 @@ public class TableInfoController {
 
     @RequestMapping("/exportData")
     @ResponseBody
-    public void exportData(@RequestParam("data") String data, HttpServletRequest request, HttpServletResponse response){
+    public void exportData(@RequestParam("data") String data, HttpServletRequest request, HttpServletResponse response) {
 
         try {
 
@@ -318,19 +324,19 @@ public class TableInfoController {
             Object obj2 = jsonObject.get("ids");
             List<Long> ids = new ArrayList<>();
             List<String> fields = null;
-            if (!ObjectUtils.isEmpty(obj)){
+            if (!ObjectUtils.isEmpty(obj)) {
                 fields = (List<String>) obj;
             }
 
-            if (!ObjectUtils.isEmpty(obj2)){
+            if (!ObjectUtils.isEmpty(obj2)) {
 
                 List<Integer> list = (List<Integer>) obj2;
-                for (Integer integer:list){
+                for (Integer integer : list) {
                     ids.add(integer.longValue());
                 }
             }
-            exportTableData(fields,ids,request,response);
-        }catch (Exception e){
+            exportTableData(fields, ids, request, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -355,7 +361,7 @@ public class TableInfoController {
             }
         }
 
-        if (ObjectUtils.isEmpty(fields)){
+        if (ObjectUtils.isEmpty(fields)) {
             fields = fields2;
         }
 
@@ -400,7 +406,7 @@ public class TableInfoController {
         }
         response.setContentType("multipart/form-data");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename="+ URLEncoder.encode(filePath,"UTF-8"));
+        response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(filePath, "UTF-8"));
         workbook.write(outputStream);
         outputStream.flush();
 

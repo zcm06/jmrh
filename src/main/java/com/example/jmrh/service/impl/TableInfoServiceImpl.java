@@ -185,6 +185,9 @@ public class TableInfoServiceImpl implements TableInfoService {
                 if (!ObjectUtils.isEmpty(vo.getCity())){
                     list.add(cb.equal(root.get("city"),vo.getCity()));
                 }
+                if (!ObjectUtils.isEmpty(vo.getDistrict())){
+                    list.add(cb.equal(root.get("district"),vo.getDistrict()));
+                }
                 return cb.and(list.toArray(new Predicate[list.size()]));
             }
         };

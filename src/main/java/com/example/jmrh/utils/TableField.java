@@ -2,7 +2,7 @@ package com.example.jmrh.utils;
 
 public enum TableField {
 
-    unit("单位"),creditCode("社会统一信用代码"),unitNature("单位性质"),
+    unit("单位名称"),creditCode("社会统一信用代码"),unitNature("单位性质"),
     legalRepresentative("法定代表人"),unitCreateTime("单位创建时间"),tel("联系电话"),
     registeredCapital("注册资金"),fixedTotalAssets("固定总资产"),annualMainBusinessIncome("年度主营业务收入"),
     annualRdInvestment("年度研发投入"),totalPeople("总人数"),developersNumber("研发人数"),businessScope("经营范围"),

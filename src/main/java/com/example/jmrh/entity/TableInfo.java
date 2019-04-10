@@ -158,4 +158,8 @@ public class TableInfo {
     @Setter
     private String city;
 
+    @Getter
+    @Setter
+    private String district;
+
 }
