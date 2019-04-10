@@ -241,15 +241,16 @@ public class TableInfoController {
             Role role = roleService.queryRoleById(userRole.getRoleId());
 
             if (!role.getName().contains("管理员")) {
-//                vo.setCity(userVo.getCity());
-                if(!userVo.getCity().equals(city)){
-                    throw new Exception("暂无权限查看!");
-                }
-                if (!ObjectUtils.isEmpty(vo.getDistrict()) && !ObjectUtils.isEmpty(district)){
-                    if (!vo.getDistrict().equals(district)){
-                        throw new Exception("暂无权限查看!");
-                    }
-                }
+                vo.setCity(userVo.getCity());
+                vo.setDistrict(userVo.getDistrict());
+//                if(!userVo.getCity().equals(city)){
+//                    throw new Exception("暂无权限查看!");
+//                }
+//                if (!ObjectUtils.isEmpty(vo.getDistrict()) && !ObjectUtils.isEmpty(district)){
+//                    if (!vo.getDistrict().equals(district)){
+//                        throw new Exception("暂无权限查看!");
+//                    }
+//                }
             }
 
             List<Long> tableInfoIds = null;
