@@ -42,4 +42,9 @@ public class User {
     @Setter
     @Column(name = "last_login_time")
     private String lastLoginTime;
+
+    @Getter
+    @Setter
+    @Column(name = "district")
+    private String district;
 }

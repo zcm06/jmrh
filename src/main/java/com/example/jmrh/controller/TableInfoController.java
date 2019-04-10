@@ -68,7 +68,7 @@ public class TableInfoController {
 
             List<Map<String, Object>> itemList = (List<Map<String, Object>>) map.get("itemList");
             List<Map<String, Object>> addressList = (List<Map<String, Object>>) map.get("addressList");
-            Address registeredAddress = (Address)map.get("registeredAddress");
+            Map<String, Object> registeredAddress = (Map<String, Object>)map.get("registeredAddress");
             clearNotUseValue(map);//清除无效的值
             TableInfo tableInfo = new TableInfo();
 
@@ -76,8 +76,8 @@ public class TableInfoController {
             Field[] fields = infoClass.getDeclaredFields();
             copyValue(tableInfo, map, fields);
             tableInfo.setCreateUserId(UserUtil.getUser(request).getId());
-            tableInfo.setCity(registeredAddress.getCity());
-            tableInfo.setDistrict(registeredAddress.getDistrict());
+            tableInfo.setCity(ObjectUtils.nullSafeToString(registeredAddress.get("city")));
+            tableInfo.setDistrict(ObjectUtils.nullSafeToString(registeredAddress.get("district")));
 //            tableInfo.setCity(UserUtil.getUser(request).getCity());
             tableInfo.setCreateTime(new Date());
             tableInfo = tableInfoService.save(tableInfo);
@@ -244,6 +244,11 @@ public class TableInfoController {
 //                vo.setCity(userVo.getCity());
                 if(!userVo.getCity().equals(city)){
                     throw new Exception("暂无权限查看!");
+                }
+                if (!ObjectUtils.isEmpty(vo.getDistrict()) && !ObjectUtils.isEmpty(district)){
+                    if (!vo.getDistrict().equals(district)){
+                        throw new Exception("暂无权限查看!");
+                    }
                 }
             }
 
