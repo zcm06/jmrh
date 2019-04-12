@@ -1,5 +1,6 @@
 package com.example.jmrh.service;
 
+import com.example.jmrh.entity.Address;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.entity.vo.TableInfoVo;
@@ -24,6 +25,8 @@ public interface TableInfoService {
     public void deleteById(Long id)throws Exception;
 
     public List<TableInfo> findAll()throws Exception;
+
+    public List<TableInfo> findAll(Address address)throws Exception;
 
     public List<TableInfo> queryTableInfosByIds(List<Long> ids)throws Exception;
 }

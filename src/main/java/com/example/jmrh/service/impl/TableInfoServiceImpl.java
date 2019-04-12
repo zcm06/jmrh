@@ -1,9 +1,11 @@
 package com.example.jmrh.service.impl;
 
 import com.example.jmrh.dao.TableInfoRepository;
+import com.example.jmrh.entity.Address;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.entity.vo.TableInfoVo;
+import com.example.jmrh.service.AddressService;
 import com.example.jmrh.service.ItemService;
 import com.example.jmrh.service.TableInfoItemService;
 import com.example.jmrh.service.TableInfoService;
@@ -15,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -31,9 +34,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @program: jmrh
@@ -52,6 +53,9 @@ public class TableInfoServiceImpl implements TableInfoService {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private AddressService addressService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -212,6 +216,20 @@ public class TableInfoServiceImpl implements TableInfoService {
     @Override
     public List<TableInfo> findAll() throws Exception {
         return tableInfoRepository.findAll();
+    }
+
+    @Override
+    public List<TableInfo> findAll(Address address) throws Exception {
+        if (ObjectUtils.isEmpty(address)){
+            return findAll();
+        }else{
+            List<Address> addressList= addressService.findAll(address);
+            Set<Long> set = new HashSet<Long>();
+            for (Address addr: addressList){
+                set.add(addr.getTableInfoId());
+            }
+            return tableInfoRepository.findAllById(set);
+        }
     }
 
     @Override

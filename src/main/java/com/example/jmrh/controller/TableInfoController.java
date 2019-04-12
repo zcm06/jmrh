@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -325,6 +326,21 @@ public class TableInfoController {
 
         try {
 
+            UserVo userVo = UserUtil.getUser(request);
+            String city = userVo.getCity();
+            String district = userVo.getDistrict();
+            List<UserRole> userRoles = userRoleService.queryUserRolesByUserId(userVo.getId());
+
+            if (ObjectUtils.isEmpty(userRoles)){
+                throw new Exception("暂无权限下载！");
+            }
+            Address address = null;
+            Role role = roleService.queryRoleById(userRoles.get(0).getRoleId());
+            if (!role.getName().contains("管理员")){
+                address = new Address();
+                address.setCity(city);
+                address.setDistrict(district);
+            }
             JSONObject jsonObject = JSON.parseObject(data);
             Object obj = jsonObject.get("fields");
             Object obj2 = jsonObject.get("ids");
@@ -341,14 +357,14 @@ public class TableInfoController {
                     ids.add(integer.longValue());
                 }
             }
-            exportTableData(fields, ids, request, response);
+            exportTableData(fields, ids, request, response,address);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public void exportTableData(List<String> fields, List<Long> ids, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void exportTableData(List<String> fields, List<Long> ids, HttpServletRequest request, HttpServletResponse response,Address address) throws Exception {
 
         List<String> captions = new ArrayList<>();
         List<String> fields2 = new ArrayList<>();
