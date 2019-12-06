@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://106.13.89.84:3306/jmrh
+    url: jdbc:mysql://119.3.106.81:3306/jmrh
     username: lemon
     password: zhang123
     type: com.alibaba.druid.pool.DruidDataSource
