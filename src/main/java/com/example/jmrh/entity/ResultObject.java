@@ -14,7 +14,12 @@ import java.io.Serializable;
 
 public class ResultObject implements Serializable {
 
-    @Getter
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1351672101727673335L;
+
+	@Getter
     @Setter
     private String message;
 

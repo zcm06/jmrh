@@ -1,9 +1,8 @@
 package com.example.jmrh.utils;
 
-import com.example.jmrh.entity.User;
-import com.example.jmrh.entity.vo.UserVo;
-
 import javax.servlet.http.HttpServletRequest;
+
+import com.example.jmrh.entity.vo.UserVo;
 
 /**
  * @program: jmrh
