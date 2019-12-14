@@ -1,9 +1,8 @@
 package com.example.jmrh.service;
 
-import com.example.jmrh.entity.Item;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+
+import com.example.jmrh.entity.Item;
 
 
 public interface ItemService {

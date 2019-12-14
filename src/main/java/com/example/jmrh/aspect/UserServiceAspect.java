@@ -1,9 +1,7 @@
 package com.example.jmrh.aspect;
 
-import com.example.jmrh.entity.Admin;
-import com.example.jmrh.entity.User;
-import com.example.jmrh.entity.vo.UserVo;
-import com.example.jmrh.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -12,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import com.example.jmrh.entity.Admin;
+import com.example.jmrh.entity.User;
+import com.example.jmrh.service.UserService;
 
 /**
  * @program: jmrh

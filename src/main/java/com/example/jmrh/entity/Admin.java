@@ -1,7 +1,6 @@
 package com.example.jmrh.entity;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @program: jmrh

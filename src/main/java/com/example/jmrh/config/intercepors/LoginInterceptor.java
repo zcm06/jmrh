@@ -1,19 +1,18 @@
 package com.example.jmrh.config.intercepors;
 
-import com.alibaba.fastjson.JSON;
-import com.example.jmrh.entity.ResultObject;
-import com.example.jmrh.entity.User;
-import com.example.jmrh.entity.vo.UserVo;
-import com.example.jmrh.utils.ResultUtil;
-import com.example.jmrh.utils.UserUtil;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import com.alibaba.fastjson.JSON;
+import com.example.jmrh.entity.ResultObject;
+import com.example.jmrh.entity.vo.UserVo;
+import com.example.jmrh.utils.UserUtil;
 
 /**
  * @program: jmrh

@@ -1,14 +1,14 @@
 package com.example.jmrh.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.example.jmrh.entity.Address;
 import com.example.jmrh.entity.TableInfo;
 import com.example.jmrh.entity.TableInfoItem;
 import com.example.jmrh.entity.vo.TableInfoVo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 public interface TableInfoService {
 

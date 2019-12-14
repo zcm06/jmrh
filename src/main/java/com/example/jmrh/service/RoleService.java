@@ -1,9 +1,8 @@
 package com.example.jmrh.service;
 
-import com.example.jmrh.entity.Role;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
+import com.example.jmrh.entity.Role;
 
 /**
  * @program: jmrh

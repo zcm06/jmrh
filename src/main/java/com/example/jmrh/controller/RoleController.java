@@ -1,6 +1,29 @@
 package com.example.jmrh.controller;
 
-import com.example.jmrh.entity.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.jmrh.entity.Admin;
+import com.example.jmrh.entity.Permission;
+import com.example.jmrh.entity.ResultObject;
+import com.example.jmrh.entity.Role;
+import com.example.jmrh.entity.RolePermission;
+import com.example.jmrh.entity.UserRole;
 import com.example.jmrh.entity.vo.PermissionVo;
 import com.example.jmrh.entity.vo.RoleVo;
 import com.example.jmrh.entity.vo.UserVo;
@@ -10,16 +33,6 @@ import com.example.jmrh.service.RoleService;
 import com.example.jmrh.service.UserRoleService;
 import com.example.jmrh.utils.ResultUtil;
 import com.example.jmrh.utils.UserUtil;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 
 /**
  * @program: jmrh
